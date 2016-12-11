@@ -21,17 +21,21 @@ namespace :tweetalyzer do
     @client = twitter_rest_client
     twitter_user_screen_name = @client.user(twitter_user_id).screen_name
 
-    reply_buckets = {}
-    @client.search("to:#{twitter_user_screen_name} since_id:#{last_tweet_id}").take(10).each do |tweet|
+    sentiment_map = {
+      Sentiment::NEGATIVE => -1,
+      Sentiment::NEUTRAL => 0,
+      Sentiment::POSITIVE => 1
+    }
+
+    # Just grab a sample of 1K for now
+    @client.search("to:#{twitter_user_screen_name} since_id:#{last_tweet_id}").take(1000).each do |tweet|
       in_reply_to_status_id = tweet.in_reply_to_status_id.to_i
       if (in_reply_to_status_id > 0)
-        sentiment = Sentimentalizer.analyze(tweet.text)
-        reply_buckets[in_reply_to_status_id] ||= []
-        reply_buckets[in_reply_to_status_id] << sentiment
+        sentiment = Sentimentalizer.analyze(tweet.text).sentiment
+        Tweet.create(twitter_id: tweet.id, twitter_user_id: tweet.user.id, text: tweet.text,
+          sentiment: sentiment_map[sentiment], in_reply_to_status_id: tweet.in_reply_to_status_id)
       end
     end
-
-    puts reply_buckets
   end
 
   def twitter_rest_client  
