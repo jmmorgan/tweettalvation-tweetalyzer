@@ -127,3 +127,22 @@ img {
  min-height: 40px;
  max-height: 40px;
 }
+.review-bar {
+  display: block;
+  font-size: 12px;
+}
+.review-bar-positive {
+  display: inline-block;
+  width: 200px;
+  color: green;
+}
+.review-bar-negative {
+  display: inline-block;
+  width: 200px;
+  color: red;
+}
+.review-bar-neutral {
+  display: inline-block;
+  width: 200px;
+  color: grey;
+}
