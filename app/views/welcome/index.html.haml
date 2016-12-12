@@ -28,9 +28,9 @@
               = tweet.text
           .review-bar
             .review-bar-positive
-              300 Positive
+              = "#{@review_stats[tweet.twitter_id][1]} Positive"
             .review-bar-negative
-              200 Negative
+              = "#{@review_stats[tweet.twitter_id][-1]} Negative"
             .review-bar-neutral
-              100 Neutral
+              = "#{@review_stats[tweet.twitter_id][0]} Neutral"
     
