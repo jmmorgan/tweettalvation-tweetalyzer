@@ -1,1 +1,26 @@
-.h1 Placeholder
+- @replies.each do |reply|
+  .div{id: "m#{reply.twitter_id}"}
+    .message-item
+      .message-inner.review-inner
+        .message-head.clearfix
+          .avatar.pull-left
+            %a{:href => "https://twitter.com/#{reply.screen_name}"}
+              %img{:src => "#{reply.profile_image_url}"}/
+          .user-detail
+            %h5.handle 
+              = reply.name
+            .post-meta
+              .asker-meta
+                %span.qa-message-what
+                %span.qa-message-when
+                  %span.qa-message-when-data 
+                    = reply.tweet_created_at ? reply.tweet_created_at.strftime('%b %d') : reply.created_at.strftime('%b %d')
+                %span.qa-message-who
+                  %span.qa-message-who-pad by
+                  %span.qa-message-who-data
+                    %a{:href => "https://twitter.com/realDonaldTrump"} 
+                      = "@#{reply.screen_name}"
+        .qa-message-content
+          = reply.text
+
+.reviews-footer

@@ -129,6 +129,8 @@ img {
 }
 .review-bar {
   display: block;
+  margin-top: 10px;
+  margin-bottom: 20px;
   font-size: 12px;
 }
 .review-bar-positive {
@@ -153,4 +155,10 @@ img {
   display: inline-block;
   width: 200px;
   cursor: pointer;
+}
+.message-inner.review-inner {
+  background: lightcyan;
+}
+.reviews-footer {
+  margin-bottom: 100px;
 }

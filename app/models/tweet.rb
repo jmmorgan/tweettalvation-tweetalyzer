@@ -26,4 +26,28 @@ class Tweet < ApplicationRecord
 
     result
   end
+
+  def self.replies(twitter_id, sentiment = 'all', offset = 0, limit = 25)
+    sentiment_int = {
+      'positive' => 1,
+      'negative' => -1,
+      'neutral' => 0,
+    }[sentiment]
+    select_clause = "tweets.twitter_id, tweets.tweet_created_at, tweets.created_at, tweets.text,
+                      tweets.twitter_user_id, twitter_users.name, twitter_users.screen_name,
+                      twitter_users.profile_image_url"
+
+    joins_clause = 'LEFT JOIN twitter_users ON tweets.twitter_user_id = twitter_users.twitter_user_id'
+    if (sentiment_int)
+      @replies = Tweet.select(select_clause).joins(joins_clause)
+        .where(in_reply_to_status_id: twitter_id, sentiment: sentiment_int)
+        .order('twitter_id DESC')
+        .offset(offset).limit(limit)
+    else
+      @replies = Tweet.select(select_clause).joins(joins_clause)
+        .where(in_reply_to_status_id: twitter_id)
+        .order('twitter_id DESC')
+        .offset(offset).limit(limit)
+    end
+  end
 end
