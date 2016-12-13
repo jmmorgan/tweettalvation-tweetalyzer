@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161211220918) do
+ActiveRecord::Schema.define(version: 20161213000112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20161211220918) do
     t.datetime "updated_at",            null: false
     t.integer  "sentiment"
     t.bigint   "in_reply_to_status_id"
+    t.datetime "tweet_created_at"
     t.index ["in_reply_to_status_id"], name: "index_tweets_on_in_reply_to_status_id", using: :btree
     t.index ["twitter_user_id"], name: "index_tweets_on_twitter_user_id", using: :btree
   end
