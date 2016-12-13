@@ -11,10 +11,11 @@
           .message-inner
             .message-head.clearfix
               .avatar.pull-left
-                %a{:href => "https://twitter.com/realDonaldTrump"}
-                  %img{:src => "https://pbs.twimg.com/profile_images/1980294624/DJT_Headshot_V2_bigger.jpg"}/
+                %a{:href => "https://twitter.com/#{@trump.screen_name}"}
+                  %img{:src => "#{@trump.profile_image_url}"}/
               .user-detail
-                %h5.handle Donald J. Trump
+                %h5.handle 
+                  = @trump.name
                 .post-meta
                   .asker-meta
                     %span.qa-message-what
@@ -24,7 +25,8 @@
                     %span.qa-message-who
                       %span.qa-message-who-pad by
                       %span.qa-message-who-data
-                        %a{:href => "https://twitter.com/realDonaldTrump"} Donald J. Trump
+                        %a{:href => "https://twitter.com/realDonaldTrump"} 
+                          = "@#{@trump.screen_name}"
             .qa-message-content
               = tweet.text
           .review-bar
