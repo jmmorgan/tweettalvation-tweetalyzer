@@ -135,14 +135,22 @@ img {
   display: inline-block;
   width: 200px;
   color: green;
+  cursor: pointer;
 }
 .review-bar-negative {
   display: inline-block;
   width: 200px;
   color: red;
+  cursor: pointer;
 }
 .review-bar-neutral {
   display: inline-block;
   width: 200px;
   color: grey;
+  cursor: pointer;
+}
+.review-bar-all {
+  display: inline-block;
+  width: 200px;
+  cursor: pointer;
 }
