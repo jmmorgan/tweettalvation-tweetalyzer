@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213053444) do
+ActiveRecord::Schema.define(version: 20161213055226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20161213053444) do
     t.string   "profile_image_url"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "name"
     t.index ["id"], name: "index_twitter_users_on_id", using: :btree
   end
 
