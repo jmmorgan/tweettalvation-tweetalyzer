@@ -71,9 +71,10 @@ namespace :tweetalyzer do
 
   task :backfill_twitter_users => [:environment] do |t, args|
 
-    tweets = Tweet.joins('LEFT OUTER JOIN twitter_users ON tweets.twitter_user_id = twitter_users.twitter_user_id 
-      WHERE twitter_users.twitter_user_id IS NULL')
-    twitter_user_ids = tweets.map(&:twitter_user_id).uniq
+    #tweets = Tweet.joins('LEFT JOIN twitter_users ON tweets.twitter_user_id = twitter_users.twitter_user_id 
+      #WHERE twitter_users.twitter_user_id IS NULL')
+    #twitter_user_ids = tweets.map(&:twitter_user_id).uniq
+    twitter_user_ids = TwitterUser.where(screen_name: nil).map(&:twitter_user_id).uniq
     
     twitter_user_ids.each_slice(100) do |ids|
       @client = twitter_rest_client
@@ -83,6 +84,7 @@ namespace :tweetalyzer do
         twitter_user.name = user.name
         twitter_user.screen_name = user.screen_name
         twitter_user.profile_image_url = user.profile_image_url_https
+        twitter_user.save
       end
     end
 
