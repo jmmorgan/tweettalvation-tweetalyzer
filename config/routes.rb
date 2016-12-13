@@ -3,4 +3,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index', via: ['get']
+
+  match '/expand_reviews', to: 'welcome#expand_reviews', via: ['get', 'post']
 end

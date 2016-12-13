@@ -38,6 +38,7 @@
               = "Show Neutral (#{@review_stats[tweet.twitter_id][0]})"
             .review-bar-all{'data-twitter-id' => tweet.twitter_id}
               = "Show All (#{@review_stats[tweet.twitter_id].values.inject(&:+)})"
+          .reviews{id: "reviews-#{tweet.twitter_id}"}
     
 :javascript
 
@@ -47,15 +48,35 @@
 
   function doDocumentReady(){
     $('.review-bar-positive').on('click', function(){
-      alert($(this).data('twitter-id'));
+      var twitter_id = $(this).data('twitter-id');
+      $.ajax({
+        url: 'expand_reviews.js',
+        method: 'GET',
+        data: {twitter_id: twitter_id, sentiment: 'positive'}
+      });
     });
     $('.review-bar-negative').on('click', function(){
-      alert($(this).data('twitter-id'));
+      var twitter_id = $(this).data('twitter-id');
+      $.ajax({
+        url: 'expand_reviews.js',
+        method: 'GET',
+        data: {twitter_id: twitter_id, sentiment: 'negative'}
+      });
     });
     $('.review-bar-neutral').on('click', function(){
-      alert($(this).data('twitter-id'));
+      var twitter_id = $(this).data('twitter-id');
+      $.ajax({
+        url: 'expand_reviews.js',
+        method: 'GET',
+        data: {twitter_id: twitter_id, sentiment: 'neutral'}
+      });
     });
     $('.review-bar-all').on('click', function(){
-      alert($(this).data('twitter-id'));
+      var twitter_id = $(this).data('twitter-id');
+      $.ajax({
+        url: 'expand_reviews.js',
+        method: 'GET',
+        data: {twitter_id: twitter_id, sentiment: 'all'}
+      });
     });
   }
