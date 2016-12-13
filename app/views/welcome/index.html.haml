@@ -30,13 +30,13 @@
             .qa-message-content
               = tweet.text
           .review-bar
-            .review-bar-positive{'data-twitter-id' => tweet.twitter_id}
+            .review-bar-positive{'data-twitter-id' => tweet.twitter_id, 'data-toggle-state' => 'collapsed', 'data-count' => @review_stats[tweet.twitter_id][1]}
               = "Show Positive (#{@review_stats[tweet.twitter_id][1]})"
-            .review-bar-negative{'data-twitter-id' => tweet.twitter_id}
+            .review-bar-negative{'data-twitter-id' => tweet.twitter_id, 'data-toggle-state' => 'collapsed', 'data-count' => @review_stats[tweet.twitter_id][-1]}
               = "Show Negative (#{@review_stats[tweet.twitter_id][-1]})"
-            .review-bar-neutral{'data-twitter-id' => tweet.twitter_id}
+            .review-bar-neutral{'data-twitter-id' => tweet.twitter_id, 'data-toggle-state' => 'collapsed', 'data-count' => @review_stats[tweet.twitter_id][0]}
               = "Show Neutral (#{@review_stats[tweet.twitter_id][0]})"
-            .review-bar-all{'data-twitter-id' => tweet.twitter_id}
+            .review-bar-all{'data-twitter-id' => tweet.twitter_id, 'data-toggle-state' => 'collapsed', 'data-count' => @review_stats[tweet.twitter_id].values.inject(&:+)}
               = "Show All (#{@review_stats[tweet.twitter_id].values.inject(&:+)})"
           .reviews{id: "reviews-#{tweet.twitter_id}"}
     
@@ -46,37 +46,84 @@
     doDocumentReady();
   });
 
+
   function doDocumentReady(){
+    // TODO: DRY all this up
     $('.review-bar-positive').on('click', function(){
       var twitter_id = $(this).data('twitter-id');
-      $.ajax({
-        url: 'expand_reviews.js',
-        method: 'GET',
-        data: {twitter_id: twitter_id, sentiment: 'positive'}
-      });
+      var count = $(this).data('count');
+      var div = $(this);
+      if ($(this).data('toggle-state') == 'collapsed') {
+        $.ajax({
+          url: 'expand_reviews.js',
+          method: 'GET',
+          data: {twitter_id: twitter_id, sentiment: 'positive'}
+        }).done(function(){
+          div.data('toggle-state', 'expanded');
+          div.text('Collapse Positive (' + count + ')');
+        });
+      } else {
+        $('#reviews-' + twitter_id).html('');
+        $(this).data('toggle-state', 'collapsed');
+        $(this).text('Show Positive (' + count + ')');
+      }
+
     });
     $('.review-bar-negative').on('click', function(){
       var twitter_id = $(this).data('twitter-id');
-      $.ajax({
-        url: 'expand_reviews.js',
-        method: 'GET',
-        data: {twitter_id: twitter_id, sentiment: 'negative'}
-      });
+      var count = $(this).data('count');
+      var div = $(this);
+      if ($(this).data('toggle-state') == 'collapsed') {
+        $.ajax({
+          url: 'expand_reviews.js',
+          method: 'GET',
+          data: {twitter_id: twitter_id, sentiment: 'negative'}
+        }).done(function(){
+          div.data('toggle-state', 'expanded');
+          div.text('Collapse Negative (' + count + ')');
+        });
+      } else {
+        $('#reviews-' + twitter_id).html('');
+        $(this).data('toggle-state', 'collapsed');
+        $(this).text('Show Negative (' + count + ')');
+      }
     });
     $('.review-bar-neutral').on('click', function(){
       var twitter_id = $(this).data('twitter-id');
-      $.ajax({
-        url: 'expand_reviews.js',
-        method: 'GET',
-        data: {twitter_id: twitter_id, sentiment: 'neutral'}
-      });
+      var count = $(this).data('count');
+      var div = $(this);
+      if ($(this).data('toggle-state') == 'collapsed') {
+        $.ajax({
+          url: 'expand_reviews.js',
+          method: 'GET',
+          data: {twitter_id: twitter_id, sentiment: 'neutral'}
+        }).done(function(){
+          div.data('toggle-state', 'expanded');
+          div.text('Collapse Neutral (' + count + ')');
+        });
+      } else {
+        $('#reviews-' + twitter_id).html('');
+        $(this).data('toggle-state', 'collapsed');
+        $(this).text('Show Neutral (' + count + ')');
+      }
     });
     $('.review-bar-all').on('click', function(){
       var twitter_id = $(this).data('twitter-id');
-      $.ajax({
-        url: 'expand_reviews.js',
-        method: 'GET',
-        data: {twitter_id: twitter_id, sentiment: 'all'}
-      });
+      var count = $(this).data('count');
+      var div = $(this);
+      if ($(this).data('toggle-state') == 'collapsed') {
+        $.ajax({
+          url: 'expand_reviews.js',
+          method: 'GET',
+          data: {twitter_id: twitter_id, sentiment: 'all'}
+        }).done(function(){
+          div.data('toggle-state', 'expanded');
+          div.text('Collapse All (' + count + ')');
+        });
+      } else {
+        $('#reviews-' + twitter_id).html('');
+        $(this).data('toggle-state', 'collapsed');
+        $(this).text('Show All (' + count + ')');
+      }
     });
   }
