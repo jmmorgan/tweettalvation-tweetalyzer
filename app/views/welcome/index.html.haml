@@ -19,7 +19,8 @@
                   .asker-meta
                     %span.qa-message-what
                     %span.qa-message-when
-                      %span.qa-message-when-data Jan 21
+                      %span.qa-message-when-data 
+                        = tweet.tweet_created_at ? tweet.tweet_created_at.strftime('%b %d') : tweet.created_at.strftime('%b %d')
                     %span.qa-message-who
                       %span.qa-message-who-pad by
                       %span.qa-message-who-data

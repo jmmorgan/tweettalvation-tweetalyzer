@@ -9,7 +9,8 @@ namespace :tweetalyzer do
     twitter_user_screen_name = @client.user(twitter_user_id).screen_name
     
     @client.search("from:#{twitter_user_screen_name} since_id:#{last_tweet_id}").take(100).each do |tweet|
-      Tweet.create(twitter_id: tweet.id, twitter_user_id: tweet.user.id, text: tweet.text)
+      Tweet.create(twitter_id: tweet.id, twitter_user_id: tweet.user.id, text: tweet.text,
+        tweet_created_at: tweet.created_at)
     end
   end
 
@@ -28,14 +29,34 @@ namespace :tweetalyzer do
     }
 
     # Just grab a sample of 1K for now
-    @client.search("to:#{twitter_user_screen_name} since_id:#{last_tweet_id}").take(1000).each do |tweet|
+    @client.search("to:#{twitter_user_screen_name} since_id:#{last_tweet_id}").take(10).each do |tweet|
       in_reply_to_status_id = tweet.in_reply_to_status_id.to_i
       if (in_reply_to_status_id > 0)
         sentiment = Sentimentalizer.analyze(tweet.text).sentiment
         Tweet.create(twitter_id: tweet.id, twitter_user_id: tweet.user.id, text: tweet.text,
-          sentiment: sentiment_map[sentiment], in_reply_to_status_id: tweet.in_reply_to_status_id)
+          sentiment: sentiment_map[sentiment], in_reply_to_status_id: tweet.in_reply_to_status_id,
+          tweet_created_at: tweet.created_at)
       end
     end
+  end
+
+  task :backfill_tweet_dates => [:environment] do |t, args|
+    
+    tweets = Tweet.where(tweet_created_at: nil)
+    tweets.each_slice(100) do |slice|
+      ids = slice.map(&:twitter_id)
+
+      @client = twitter_rest_client
+      statuses = @client.statuses(ids)
+      statuses.each do |status|
+        tweet = Tweet.find_by(twitter_id: status.id)
+        if (tweet)
+          tweet.tweet_created_at = status.created_at
+          tweet.save
+        end
+      end
+    end
+
   end
 
   def twitter_rest_client  
