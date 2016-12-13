@@ -33,7 +33,7 @@ namespace :tweetalyzer do
     }
 
     # Just grab a sample of 1K for now
-    @client.search("to:#{twitter_user_screen_name} since_id:#{last_tweet_id}").take(10).each do |tweet|
+    @client.search("to:#{twitter_user_screen_name} since_id:#{last_tweet_id}").take(1000).each do |tweet|
       in_reply_to_status_id = tweet.in_reply_to_status_id.to_i
       if (in_reply_to_status_id > 0)
         sentiment = Sentimentalizer.analyze(tweet.text).sentiment
