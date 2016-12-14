@@ -1,4 +1,5 @@
 - @replies.each do |reply|
+  - sentiment_prefix = {1 => 'smile', 0 => 'meh', -1 => 'frown'}[reply.sentiment] || 'frown'
   .div{id: "m#{reply.twitter_id}"}
     .message-item
       .message-inner.review-inner
@@ -20,6 +21,7 @@
                   %span.qa-message-who-data
                     %a{:href => "https://twitter.com/realDonaldTrump"} 
                       = "@#{reply.screen_name}"
+        %i{'class' => "fa fa-#{sentiment_prefix}-o", 'aria-hidden' => true}
         .qa-message-content
           = reply.text
 

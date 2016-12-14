@@ -34,7 +34,7 @@ class Tweet < ApplicationRecord
       'neutral' => 0,
     }[sentiment]
     select_clause = "tweets.twitter_id, tweets.tweet_created_at, tweets.created_at, tweets.text,
-                      tweets.twitter_user_id, twitter_users.name, twitter_users.screen_name,
+                      tweets.twitter_user_id, tweets.sentiment, twitter_users.name, twitter_users.screen_name,
                       twitter_users.profile_image_url"
 
     joins_clause = 'LEFT JOIN twitter_users ON tweets.twitter_user_id = twitter_users.twitter_user_id'
