@@ -57,7 +57,7 @@
         $.ajax({
           url: 'expand_reviews.js',
           method: 'GET',
-          data: {twitter_id: twitter_id, sentiment: 'positive'}
+          data: {twitter_id: twitter_id, sentiment: 'positive', count: count}
         }).done(function(){
           div.data('toggle-state', 'expanded');
           div.text('Collapse Positive (' + count + ')');
@@ -77,7 +77,7 @@
         $.ajax({
           url: 'expand_reviews.js',
           method: 'GET',
-          data: {twitter_id: twitter_id, sentiment: 'negative'}
+          data: {twitter_id: twitter_id, sentiment: 'negative', count: count}
         }).done(function(){
           div.data('toggle-state', 'expanded');
           div.text('Collapse Negative (' + count + ')');
@@ -96,7 +96,7 @@
         $.ajax({
           url: 'expand_reviews.js',
           method: 'GET',
-          data: {twitter_id: twitter_id, sentiment: 'neutral'}
+          data: {twitter_id: twitter_id, sentiment: 'neutral', count: count}
         }).done(function(){
           div.data('toggle-state', 'expanded');
           div.text('Collapse Neutral (' + count + ')');
@@ -115,7 +115,7 @@
         $.ajax({
           url: 'expand_reviews.js',
           method: 'GET',
-          data: {twitter_id: twitter_id, sentiment: 'all'}
+          data: {twitter_id: twitter_id, sentiment: 'all', count: count}
         }).done(function(){
           div.data('toggle-state', 'expanded');
           div.text('Collapse All (' + count + ')');

@@ -1,0 +1,46 @@
+- if (@total_count > @limit)
+  .container
+    %ul.pagination
+      - if (@page == 1)
+        %li.disabled
+          %a{:href => "#", 'class' => 'pagination-location-' + location, 'data-page' => 1} «
+      - else
+        %li
+          %a{:href => "#", 'class' => 'pagination-location-' + location, 'data-page' => @page - 1} «
+
+      - @pagination_array.each do |item|
+        - if(item[1] == @page)
+          %li.active
+            %a{:href => "#", 'class' => 'pagination-location-' + location, 'data-page' => item[1]}
+              #{item[0]}
+              %span.sr-only (current)
+        - else
+          %li
+            %a{:href => "#", 'class' => 'pagination-location-' + location, 'data-page' => item[1]}
+              #{item[0]}
+      
+      - if (@page == @final_page)
+        %li.disabled
+          %a{:href => "#", 'class' => 'pagination-location-' + location, 'data-page' => @final_page} »
+      - else
+        %li
+          %a{:href => "#", 'class' => 'pagination-location-' + location, 'data-page' => @page + 1} »
+
+
+:javascript
+
+  $(document).ready(function(){
+    // TODO: DRY all this up with JS on index page
+    $('.pagination-location-#{location}').on('click', function(e){
+      if($(this).hasClass('active') || $(this).hasClass('disabled')){
+        return false;
+      }
+      page = $(this).data('page');
+      $.ajax({
+        url: 'expand_reviews.js',
+        method: 'GET',
+        data: {twitter_id: '#{@twitter_id}', sentiment: '#{@sentiment}', count: #{@total_count}, page: page}
+      });
+      return false;
+    });
+  });

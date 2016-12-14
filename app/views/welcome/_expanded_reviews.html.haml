@@ -1,3 +1,4 @@
+= render partial: 'review_paginator', locals: {location: 'header'}
 - @replies.each do |reply|
   - sentiment_prefix = {1 => 'smile', 0 => 'meh', -1 => 'frown'}[reply.sentiment] || 'frown'
   .div{id: "m#{reply.twitter_id}"}
@@ -26,3 +27,4 @@
           = reply.text
 
 .reviews-footer
+  = render partial: 'review_paginator', locals: {location: 'footer'}

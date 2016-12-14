@@ -164,3 +164,41 @@ img {
 .reviews-footer {
   margin-bottom: 100px;
 }
+
+// Grokked from http://bootsnipp.com/snippets/featured/rounded-pagination
+.pagination>li {
+  display: inline;
+}
+
+.pagination>li>a, .pagination>li>span { 
+  border-radius: 50% !important;
+  margin: 0 5px;
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #428bca;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.pagination>.active>a, .pagination>.active>span, 
+  .pagination>.active>a:hover, .pagination>.active>span:hover, 
+  .pagination>.active>a:focus, .pagination>.active>span:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
+.pagination>.disabled>span, .pagination>.disabled>span:hover, 
+  .pagination>.disabled>span:focus, .pagination>.disabled>a, 
+  .pagination>.disabled>a:hover, .pagination>.disabled>a:focus {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}
