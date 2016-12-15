@@ -1,5 +1,13 @@
 namespace :tweetalyzer do
 
+  task :init_vars => [:environment] do |t, args|
+    @sentiment_map = {
+      Sentiment::NEGATIVE => -1,
+      Sentiment::NEUTRAL => 0,
+      Sentiment::POSITIVE => 1
+    }
+  end
+
   task :collect_recent_tweets => [:environment] do |t, args|
     twitter_user_id = args[:twitter_user_id] ||  25073877 #@realDonaldTrump
     twitter_user_id = twitter_user_id.to_i # Ensure int format
@@ -18,7 +26,7 @@ namespace :tweetalyzer do
     end
   end
 
-  task :collect_recent_replies => [:environment] do |t, args|
+  task :collect_recent_replies => :init_vars do |t, args|
     twitter_user_id = args[:twitter_user_id] ||  25073877 #@realDonaldTrump
     twitter_user_id = twitter_user_id.to_i # Ensure int format
     last_tweet_id = Tweet.maximum(:twitter_id) || 0
@@ -26,19 +34,13 @@ namespace :tweetalyzer do
     @client = twitter_rest_client
     twitter_user_screen_name = @client.user(twitter_user_id).screen_name
 
-    sentiment_map = {
-      Sentiment::NEGATIVE => -1,
-      Sentiment::NEUTRAL => 0,
-      Sentiment::POSITIVE => 1
-    }
-
     # Just grab a sample of 1K for now
     @client.search("to:#{twitter_user_screen_name} since_id:#{last_tweet_id}").take(1000).each do |tweet|
       in_reply_to_status_id = tweet.in_reply_to_status_id.to_i
       if (in_reply_to_status_id > 0)
         sentiment = Sentimentalizer.analyze(tweet.text).sentiment
         Tweet.create(twitter_id: tweet.id, twitter_user_id: tweet.user.id, text: tweet.text,
-          sentiment: sentiment_map[sentiment], in_reply_to_status_id: tweet.in_reply_to_status_id,
+          sentiment: @sentiment_map[sentiment], in_reply_to_status_id: tweet.in_reply_to_status_id,
           tweet_created_at: tweet.created_at)
         user = tweet.user
         twitter_user_id = tweet.user.id
@@ -85,6 +87,24 @@ namespace :tweetalyzer do
         twitter_user.screen_name = user.screen_name
         twitter_user.profile_image_url = user.profile_image_url_https
         twitter_user.save
+      end
+    end
+
+  end
+
+  task :reclassify_tweets => :init_vars do |t, args|
+    tweet_count = 0
+    Tweet.find_in_batches do |tweets|
+      tweets.each do |tweet|
+        tweet_count += 1
+        sentiment = @sentiment_map[Sentimentalizer.analyze(tweet.text).sentiment]
+        if(sentiment != tweet.sentiment)
+          puts "Reclassifying tweet #{tweet.twitter_id}"
+          tweet.update(sentiment: sentiment)
+        end
+        if (tweet_count % 100 == 0)
+          puts "Completed processing #{tweet_count} tweets"
+        end
       end
     end
 
