@@ -58,6 +58,8 @@ GEM
       execjs
     coffee-script-source (1.11.1)
     concurrent-ruby (1.0.2)
+    d3-rails (4.3.0)
+      railties (>= 3.1)
     debug_inspector (0.0.2)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
@@ -205,6 +207,7 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.alpha5)
   byebug
   coffee-rails (~> 4.2)
+  d3-rails
   font-awesome-rails
   haml
   jbuilder (~> 2.5)
