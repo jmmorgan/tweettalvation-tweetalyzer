@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   root 'welcome#index', via: ['get']
 
   match '/expand_reviews', to: 'welcome#expand_reviews', via: ['get', 'post']
+  match '/expand_timeline_graph', to: 'welcome#expand_timeline_graph', via: ['get', 'post']
 end

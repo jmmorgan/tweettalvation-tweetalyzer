@@ -7,6 +7,7 @@ class WelcomeController < ApplicationController
     @review_stats = Tweet.review_stats(@trump_tweets)
   end
 
+  # TODO: Port some of this logic to concerns, interactors, etc. (thin controller)
   def expand_reviews
     @twitter_id = params[:twitter_id]
     @sentiment = params[:sentiment]
@@ -17,6 +18,10 @@ class WelcomeController < ApplicationController
     _build_pagination_array
     offset = (@page -1 ) * @limit
     @replies = Tweet.replies(@twitter_id, @sentiment, offset, @limit)
+  end
+
+  def expand_timeline_graph
+    @twitter_id = params[:twitter_id]
   end
 
   def _build_pagination_array

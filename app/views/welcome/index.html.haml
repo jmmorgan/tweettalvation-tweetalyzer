@@ -38,6 +38,8 @@
               = "Show Neutral (#{@review_stats[tweet.twitter_id][0]})"
             .review-bar-all{'data-twitter-id' => tweet.twitter_id, 'data-toggle-state' => 'collapsed', 'data-count' => @review_stats[tweet.twitter_id].values.inject(&:+)}
               = "Show All (#{@review_stats[tweet.twitter_id].values.inject(&:+)})"
+            .review-bar-graph-timeline{'data-twitter-id' => tweet.twitter_id, 'data-toggle-state' => 'collapsed'}
+              = "Show Timeline Graph"
           .reviews{id: "reviews-#{tweet.twitter_id}"}
     
 :javascript
@@ -124,6 +126,24 @@
         $('#reviews-' + twitter_id).html('');
         $(this).data('toggle-state', 'collapsed');
         $(this).text('Show All (' + count + ')');
+      }
+    });
+    $('.review-bar-graph-timeline').on('click', function(){
+      var twitter_id = $(this).data('twitter-id');
+      var div = $(this);
+      if ($(this).data('toggle-state') == 'collapsed') {
+        $.ajax({
+          url: 'expand_timeline_graph.js',
+          method: 'GET',
+          data: {twitter_id: twitter_id}
+        }).done(function(){
+          div.data('toggle-state', 'expanded');
+          div.text('Collapse Timeline Graph');
+        });
+      } else {
+        $('#reviews-' + twitter_id).html('');
+        $(this).data('toggle-state', 'collapsed');
+        $(this).text('Show Timeline Graph');
       }
     });
   }
