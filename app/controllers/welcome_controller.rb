@@ -24,6 +24,11 @@ class WelcomeController < ApplicationController
     @twitter_id = params[:twitter_id]
   end
 
+  def timeline_graph_data
+    @twitter_id = params[:twitter_id]
+    render json: Tweet.replies_timeline(@twitter_id)
+  end
+
   def _build_pagination_array
     @pagination_array = []
     # get current page offset
