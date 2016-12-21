@@ -1,109 +1,84 @@
-%svg{id: "svg-#{@twitter_id}", width: 1048, height: 300}
+%div{id: "svg-#{@twitter_id}"}
 
 :javascript
 
 
   $(document).ready(function(){
-    // Grokked from http://bl.ocks.org/mbostock/3883245,
-    // https://code.tutsplus.com/tutorials/building-a-multi-line-chart-using-d3js-part-2--cms-22973
-    // https://bl.ocks.org/mbostock/3887051
+    // Grokked from http://blockbuilder.org/mbostock/882152
+    // and https://bl.ocks.org/mbostock/3887051
+    var n = 20, // number of samples
+    m = 4; // number of series
 
-    var svg = d3.select("#svg-#{@twitter_id}"),
-    margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-    var parseTime = d3.timeParse("%Y-%b-%d %H:00");
-    
-    var x0 = d3.scaleBand()
-      .rangeRound([0, width], .1);
-    
-    var x1 = d3.scaleOrdinal();
+    var data = d3.range(m).map(function() { return d3.range(n).map(Math.random); });
+
+    var margin = {top: 20, right: 30, bottom: 30, left: 40},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
     
     var y = d3.scaleLinear()
-      .range([height, 0]);
-
-    var color = d3.scaleBand()
-      .range(["red", "lightgrey", "lightgreen"]);
+        .domain([0, 1])
+        .range([height, 0]);
+    
+    var x0 = d3.scaleBand()
+        .domain(d3.range(n))
+        .range([0, width], .2);
+    
+    var x1 = d3.scaleBand()
+        .domain(d3.range(m))
+        .range([0, x0.bandwidth()]);
+    
+    var z = d3.scaleOrdinal(d3.schemeCategory10);
     
     var xAxis = d3.axisBottom()
-      .scale(x0)
+        .scale(x0)
     
     var yAxis = d3.axisLeft()
-      .scale(y)
-      .tickFormat(d3.format(".2s"));
-
-    d3.json("timeline_graph_data?t=" + Math.floor(Date.now() / 1000) + "&twitter_id=#{@twitter_id}", function(data) {
-      var dataGroup = d3.nest()
-        .key(function(d) {
-          return d.sentiment;
-      })
-      .entries(data); 
-
-      var sentimentNames = Array('Negative', 'Neutral', 'Positive');
-      var sentiments = Array(-1,0,1);
-      
-
-      x0.domain(d3.extent(data, function(d) { return parseTime(d.time); }));
-      x1.domain(sentimentNames).range([0, x0.bandwidth]);;
-      y.domain([0, d3.max(data, function(d) { return d.count; })]);
-
-      g.append("g")
-        .attr("class", "axis axis--x")
+        .scale(y)
+        
+    
+    var svg = d3.select("#svg-#{@twitter_id}").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("svg:g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+    
+    svg.append("g")
+        .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
-
-      g.append("g")
-        .attr("class", "axis axis--y")
-        .call(d3.axisLeft(y))
-      .append("text")
-        .attr("fill", "#000")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", "0.71em")
-        .style("text-anchor", "end")
-        .text('Reviews')
-
-      var colorMap = {};
-      colorMap[-1] = 'red';
-      colorMap[0] = 'lightgrey';
-      colorMap[1] = 'lightgreen';
-      
-      var state = svg.selectAll(".state")
+    console.log(x1);
+    console.log(x1.bandwidth());
+    svg.append("g").selectAll("g")
         .data(data)
       .enter().append("g")
-        .attr("class", "state")
-        .attr("transform", function(d) { return "translate(" + x0(parseTime(d.time)) + ",0)"; });
-      console.log('Steady');
-      state.selectAll("rect")
-          .data(function(d) { return d; })
-        .enter().append("rect")
-          .attr("width", x1.bandwidth)
-          .attr("x", function(d) { return x1(d); })
-          .attr("y", function(d) { return y(d); })
-          .attr("height", function(d) { console.log(d); return height - y(d); })
-          .style("fill", function(d) { return color(d); });
-      console.log('Go');
-      var legend = svg.selectAll(".legend")
-          .data(sentimentNames.slice().reverse())
-        .enter().append("g")
-          .attr("class", "legend")
-          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+        .style("fill", function(d, i) { return z(i); })
+        .attr("transform", function(d, i) { return "translate(" + x1(i) + ",0)"; })
+      .selectAll("rect")
+        .data(function(d) { return d; })
+      .enter().append("rect")
+        .attr("width", x1.bandwidth())
+        .attr("height", y)
+        .attr("x", function(d, i) { return x0(i); })
+        .attr("y", function(d) { return height - y(d); });
+        
+    
+    d3.csv("timeline_graph_data?t=" + Math.floor(Date.now() / 1000) + "&twitter_id=#{@twitter_id}", function(error, data) {
+      if (error) throw error;
+      console.log(data);
+      var ageNames = d3.keys(data[0]).filter(function(key) { return key !== "State"; });
 
-      legend.append("rect")
-          .attr("x", width - 18)
-          .attr("width", 18)
-          .attr("height", 18)
-          .style("fill", color);
-
-      legend.append("text")
-          .attr("x", width - 24)
-          .attr("y", 9)
-          .attr("dy", ".35em")
-          .style("text-anchor", "end")
-          .text(function(d) { return d; });
-        });
-
+      data.forEach(function(d) {
+        d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
+      });
+    });
   });
+
+  // TODOs
+  // data.csv
+  // manipulate to look like our desired chart
+  // convert from JSON to 2D array?
 

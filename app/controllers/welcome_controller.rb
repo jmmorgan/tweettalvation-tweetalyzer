@@ -1,4 +1,5 @@
 class WelcomeController < ApplicationController
+  include WelcomeHelper
 
   def index
     trump_id = 25073877
@@ -26,7 +27,9 @@ class WelcomeController < ApplicationController
 
   def timeline_graph_data
     @twitter_id = params[:twitter_id]
-    render json: Tweet.replies_timeline(@twitter_id)
+    @replies_timeline_data = Tweet.replies_timeline(@twitter_id)
+    @replies_timeline_data_csv = _replies_timeline_data_csv(@replies_timeline_data)
+    render partial: 'timeline_graph_data'
   end
 
   def _build_pagination_array
