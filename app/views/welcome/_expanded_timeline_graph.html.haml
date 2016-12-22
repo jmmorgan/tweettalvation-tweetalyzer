@@ -11,7 +11,7 @@
         height = 500 - margin.top - margin.bottom;
     
     
-    d3.csv("timeline_graph_data?t=" + Math.floor(Date.now() / 1000) + "&twitter_id=#{@twitter_id}", function(error, data) {
+    d3.csv("./timeline_graph_data?t=" + Math.floor(Date.now() / 1000) + "&twitter_id=#{@twitter_id}", function(error, data) {
       if (error) throw error;
       
       var sentimentNames = d3.keys(data[0]).filter(function(key) { return key !== "Time"; });
@@ -68,7 +68,7 @@
         .data(function(d) { return d.sentiments; })
       .enter().append("rect")
         .attr("width", x1.bandwidth())
-        .attr("x", function(d) { console.log(d.name); console.log(x1(d.name)); return x1(d.name); })
+        .attr("x", function(d) { return x1(d.name); })
         .attr("y", function(d) { return y(d.value); })
         .attr("height", function(d) { return height - y(d.value); })
         .style("fill", function(d) { return color(d.name); });
