@@ -1,0 +1,255 @@
+/* line 6, ../sass/howfucked.scss */
+body {
+  background-color: #ccc;
+}
+
+/* line 10, ../sass/howfucked.scss */
+.title {
+  margin-top: 30px;
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+/* line 18, ../sass/howfucked.scss */
+.thermometer {
+  border-radius: 50px;
+  width: 30px;
+  height: 300px;
+}
+
+/* line 24, ../sass/howfucked.scss */
+#glass {
+  border: 4px solid;
+  border-top-color: rgba(0, 0, 0, 0.4);
+  border-right-color: rgba(0, 0, 0, 0.3);
+  border-bottom-color: rgba(0, 0, 0, 0.3);
+  border-left-color: rgba(0, 0, 0, 0.5);
+  margin: 20px auto;
+  position: relative;
+}
+
+/* line 34, ../sass/howfucked.scss */
+#mercury {
+  position: absolute;
+  bottom: 0;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+/* line 41, ../sass/howfucked.scss */
+#markings {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  position: absolute;
+  top: -37.5px;
+  right: 0;
+}
+
+/* line 50, ../sass/howfucked.scss */
+#markings li {
+  padding: 0;
+  margin: 0;
+  height: 50.1px;
+  width: 15px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+/* line 58, ../sass/howfucked.scss */
+#markings li:after {
+  position: absolute;
+  margin-top: 45px;
+  margin-left: 24px;
+  width: 200px;
+  color: #333;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+/* line 67, ../sass/howfucked.scss */
+#markings li:first-child:after {
+  content: 'The Road';
+}
+
+/* line 71, ../sass/howfucked.scss */
+#markings li:nth-child(2):after {
+  content: 'Mad Max';
+}
+
+/* line 75, ../sass/howfucked.scss */
+#markings li:nth-child(3):after {
+  content: 'Escape From New York';
+}
+
+/* line 79, ../sass/howfucked.scss */
+#markings li:nth-child(4):after {
+  content: 'Nineteen Eighty-Four';
+}
+
+/* line 83, ../sass/howfucked.scss */
+#markings li:nth-child(5):after {
+  content: 'Fahrenheit 451';
+}
+
+/* line 87, ../sass/howfucked.scss */
+#markings li:last-child:after {
+  content: 'Idiocracy';
+}
+
+/* line 91, ../sass/howfucked.scss */
+.the-road, .mad-max, .escape-from-new-york, .nineteen-eighty-four, .fahrenheit-451, .idiocracy {
+  animation-timing-function: linear;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+/* line 97, ../sass/howfucked.scss */
+.the-road {
+  animation-name: the-road;
+  background: -moz-linear-gradient(top, #fc0000 0%, #feb222 50%, #00ff3b 100%);
+}
+
+@keyframes the-road {
+  0% {
+    height: 0;
+  }
+  80% {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+  100% {
+    height: 100%;
+    background-color: red;
+    background: #fc0000;
+    background: -moz-linear-gradient(top, #fc0000 0%, #feb222 70%, #00ff3b 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc0000), color-stop(70%, #feb222), color-stop(100%, #00ff3b));
+    background: -webkit-linear-gradient(top, #fc0000 0%, #feb222 70%, #00ff3b 100%);
+    background: -o-linear-gradient(top, #fc0000 0%, #feb222 70%, #00ff3b 100%);
+    background: -ms-linear-gradient(top, #fc0000 0%, #feb222 70%, #00ff3b 100%);
+    background: linear-gradient(to bottom, #fc0000 0%, #feb222 70%, #00ff3b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ff3b', endColorstr='#fc0000',GradientType=0 );
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+  }
+}
+/* line 127, ../sass/howfucked.scss */
+.mad-max {
+  animation-name: mad-max;
+  background: -moz-linear-gradient(top, #fc370a 0%, #feb222 62%, #00ff3b 100%);
+}
+
+@keyframes mad-max {
+  from {
+    height: 0;
+  }
+  to {
+    height: 235px;
+    background-color: red;
+    background: #fc370a;
+    background: -moz-linear-gradient(top, #fc370a 0%, #feb222 62%, #00ff3b 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc370a), color-stop(62%, #feb222), color-stop(100%, #00ff3b));
+    background: -webkit-linear-gradient(top, #fc370a 0%, #feb222 41%, #00ff3b 100%);
+    background: -o-linear-gradient(top, #fc370a 0%, #feb222 62%, #00ff3b 100%);
+    background: -ms-linear-gradient(top, #fc370a 0%, #feb222 62%, #00ff3b 100%);
+    background: linear-gradient(to bottom, #fc370a 0%, #feb222 63%, #00ff3b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc370a', endColorstr='#00ff3b',GradientType=0 );
+  }
+}
+/* line 150, ../sass/howfucked.scss */
+.escape-from-new-york {
+  animation-name: escape-from-new-york;
+  background: -moz-linear-gradient(top, #fc6312 0%, #feb222 51%, #00ff3b 100%);
+}
+
+@keyframes escape-from-new-york {
+  from {
+    height: 0;
+  }
+  to {
+    height: 182.5px;
+    background-color: orange;
+    background: #fc6312;
+    background: -moz-linear-gradient(top, #fc6312 0%, #feb222 51%, #00ff3b 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc6312), color-stop(51%, #feb222), color-stop(100%, #00ff3b));
+    background: -webkit-linear-gradient(top, #fc6312 0%, #feb222 51%, #00ff3b 100%);
+    background: -o-linear-gradient(top, #fc6312 0%, #feb222 51%, #00ff3b 100%);
+    background: -ms-linear-gradient(top, #fc6312 0%, #feb222 51%, #00ff3b 100%);
+    background: linear-gradient(to bottom, #fc6312 0%, #feb222 51%, #00ff3b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eb8b24', endColorstr='#00ff3b',GradientType=0 );
+  }
+}
+/* line 173, ../sass/howfucked.scss */
+.nineteen-eighty-four {
+  animation-name: nineteen-eighty-four;
+  background: -moz-linear-gradient(top, #fd901b 0%, #feb222 31%, #00ff3b 100%);
+}
+
+@keyframes nineteen-eighty-four {
+  from {
+    height: 0;
+  }
+  to {
+    height: 130px;
+    background-color: orange;
+    background: #fd901b;
+    background: -moz-linear-gradient(top, #fd901b 0%, #feb222 31%, #00ff3b 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fd901b), colot-stop(31%, #feb222), color-stop(100%, #00ff3b));
+    background: -webkit-linear-gradient(top, #fd901b 0%, #feb222 31%, #00ff3b 100%);
+    background: -o-linear-gradient(top, #fd901b 0%, #feb222 31%, #00ff3b 100%);
+    background: -ms-linear-gradient(top, #fd901b 0%, #feb222 31%, #00ff3b 100%);
+    background: linear-gradient(to bottom, #fd901b 0%, #feb222 31%, #00ff3b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fd901b', endColorstr='#00ff3b',GradientType=0 );
+  }
+}
+/* line 196, ../sass/howfucked.scss */
+.fahrenheit-451 {
+  animation-name: fahrenheit-451;
+  background: -moz-linear-gradient(top, #dbbc25 0%, #00ff3b 100%);
+}
+
+@keyframes fahrenheit-451 {
+  from {
+    height: 0;
+  }
+  to {
+    height: 77.5px;
+    background-color: yellow;
+    background: #dbbc25;
+    background: -moz-linear-gradient(top, #dbbc25 0%, #00ff3b 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dbbc25), color-stop(100%, #00ff3b));
+    background: -webkit-linear-gradient(top, #dbbc25 0%, #00ff3b 100%);
+    background: -o-linear-gradient(top, #dbbc25 0%, #00ff3b 100%);
+    background: -ms-linear-gradient(top, #dbbc25 0%, #00ff3b 100%);
+    background: linear-gradient(to bottom, #dbbc25 0%, #00ff3b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbbc25', endColorstr='#00ff3b',GradientType=0 );
+  }
+}
+/* line 219, ../sass/howfucked.scss */
+.idiocracy {
+  animation-name: idiocracy;
+  background: -moz-linear-gradient(top, #4fe834 0%, #00ff3b 100%);
+}
+
+@keyframes idiocracy {
+  from {
+    height: 0;
+  }
+  to {
+    height: 27.5px;
+    background-color: green;
+    background: #4fe834;
+    background: -moz-linear-gradient(top, #4fe834 0%, #00ff3b 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4fe834), color-stop(100%, #00ff3b));
+    background: -webkit-linear-gradient(top, #4fe834 0%, #00ff3b 100%);
+    background: -o-linear-gradient(top, #4fe834 0%, #00ff3b 100%);
+    background: -ms-linear-gradient(top, #4fe834 0%, #00ff3b 100%);
+    background: linear-gradient(to bottom, #4fe834 0%, #00ff3b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4fe834', endColorstr='#00ff3b',GradientType=0 );
+  }
+}
+/* line 242, ../sass/howfucked.scss */
+.fucked-level {
+  display: block;
+  text-align: center;
+}

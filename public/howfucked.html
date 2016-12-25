@@ -1,0 +1,50 @@
+<html>
+<head>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/howfucked.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]>
+      <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <![endif]-->
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class='title'>How Fucked Are We?</div>
+  <div id="glass" class="thermometer">
+  <!-- Class options: idiocracy, fahrenheit-451, nineteen-eighty-four, escape-from-new-york, mad-max, the-road -->
+  <div id="mercury" class="thermometer mad-max"></div>
+  <ul id="markings">
+    <li>&nbsp;</li>
+    <li>&nbsp;</li>
+    <li>&nbsp;</li>
+    <li>&nbsp;</li>
+    <li>&nbsp;</li>
+    <li>&nbsp;</li>
+  </ul>
+  </div>
+  <div class='fucked-level'>
+    <select id='fucked-selector'>
+      <option value="idiocracy">Idiocracy</option>
+      <option value="fahrenheit-451">Fahrenheit 451</option>
+      <option value="nineteen-eighty-four">Nineteen Eight-Four</option>
+      <option value="escape-from-new-york">Escape From New York</option>
+      <option value="mad-max" selected>Mad Max</option>
+      <option value="the-road">The Road</option>
+    </select>
+  </div>
+
+</body>
+</html>
+
+<script>
+  $(document).ready(function(){
+    $('#fucked-selector').on('change', function(){
+      $('#mercury').attr('class', 'thermometer ' + this.value);
+    });
+  });
+</script>
+
