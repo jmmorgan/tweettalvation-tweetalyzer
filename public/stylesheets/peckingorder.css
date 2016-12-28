@@ -1,0 +1,46 @@
+body {
+  background-color: #ccc;
+}
+
+.title {
+  margin-top: 30px;
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+.subtitle {
+  margin-top: 10px;
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+.pecking-order {
+  padding-left: calc(50% - (((228px * 1.5) + 180px)/2));
+}
+
+.wood-bar-horizontal {
+  width: 140px;
+  background-color: brown;
+  height: 20px;
+}
+
+.wood-bar-vertical {
+  float: left;
+  width: 20px;
+  background-color: brown;
+  height: 1020px;
+}
+
+.farmer {
+  float: left;
+  padding-top: calc(1020px - (658px * 1.5));
+}
+
+.farmer > img {
+  width: calc(228px * 1.5);
+  height: calc(658px * 1.5);
+}

@@ -2,7 +2,7 @@
 <head>
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
-  <link href="/stylesheets/howfucked.css" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/peckingorder.css" rel="stylesheet" type="text/css" />
   <!--[if IE]>
       <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <![endif]-->
@@ -10,23 +10,112 @@
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
+  <script>
+    // Grokked from http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_draganddrop
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("src", ev.srcElement.src);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var src = ev.dataTransfer.getData("src");
+        var targetSrc = ev.target.src;
+        var srcIndex = 0;
+        var targetIndex = 0;
+
+        if(src === targetSrc){
+          return;
+        }
+        
+        // Get all hens in display order
+        // insert src before target src
+        hens = $('.hen').get();
+        var srcs = new Array();
+        for(var i = 0; i < hens.length; ++i){
+          var thisSrc = hens[i].src;
+          if(thisSrc === targetSrc){
+            targetIndex = i;
+          } else if(thisSrc === src){
+            srcIndex = i;
+          }
+          srcs.push(thisSrc);
+        }
+        
+        console.log(srcs);
+        console.log(srcIndex);
+        console.log(targetIndex);
+        if(srcIndex < targetIndex){
+          srcs.splice(srcIndex, 1);
+          srcs.splice(targetIndex, 0, src);
+        } else if (srcIndex > targetIndex){
+          srcs.splice(targetIndex, 0, src);
+          console.log(srcs);
+          srcs.splice(srcIndex+1, 1);
+          console.log(srcs);
+        }
+
+        // Re-order hens
+        for(var i = 0; i < hens.length; ++i){
+          hens[i].src = srcs[i];
+        }
+    }
+
+    $(document).ready(function(){ 
+      $('.apartment').attr('ondrop', 'drop(event)');
+      $('.apartment').attr('ondragover', 'allowDrop(event)');
+
+      $('.hen').attr('draggable', 'true');
+      $('.hen').attr('ondragstart', 'drag(event)');
+      $('.hen').attr('height', '180');
+      $('.hen').attr('width', '140');
+    });
+  </script>
 </head>
 
 <body>
-  <div>
-    <img src="putin-hen.png"/>
-  </div>
-  <div>
-    <img src="bannon-hen.png"/>
-  </div>
-  <div>
-    <img src="conway-hen.png"/>
-  </div>
-  <div>
-    <img src="spicer-hen.png"/>
-  </div>
-  <div>
-    <img src="priebus-hen.png"/>
+  <div class="title">Trump's Pecking Order</div>
+  <div class="subtitle">(Drag &amp; drop the hens)</div>
+  <div class="pecking-order">
+    <div class='farmer'>
+      <img src="trump-farmer.png"/>
+    </div>
+    <div class='wood-bar-vertical'>
+    </div>
+    <div style='float: left; background-color: yellow;'>
+      <div class='wood-bar-horizontal'>
+      </div>
+      <div class='apartment'>
+        <img class="hen" src="putin-hen.png"/>
+      </div>
+      <div class='wood-bar-horizontal'>
+      </div>
+      <div class='apartment'>
+        <img class="hen" src="bannon-hen.png""/>
+      </div>
+      <div class='wood-bar-horizontal'>
+      </div>
+      <div class='apartment'>
+        <img class="hen" src="conway-hen.png"/>
+      </div>
+      <div class='wood-bar-horizontal'>
+      </div>
+      <div class='apartment'>
+        <img class="hen" src="spicer-hen.png"/>
+      </div>
+      <div class='wood-bar-horizontal'>
+      </div>
+      <div class='apartment'>
+        <img class="hen" src="priebus-hen.png"/>
+      </div>
+      <div class='wood-bar-horizontal'>
+      </div>
+    </div>
+    <div class='wood-bar-vertical'>
+    </div>
   </div>
 </body>
 </html>
