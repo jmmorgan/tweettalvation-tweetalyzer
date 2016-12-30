@@ -10,6 +10,9 @@
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
+  <script src="/scripts/linkifyjs/linkify.min.js"></script>
+  <script src="/scripts/linkifyjs/linkify-string.js"></script>
+  <script src="/scripts/linkifyjs/linkify-jquery.js"></script>
   <script>
     // Globals
     statusIds = [];
@@ -64,7 +67,7 @@
       var div = document.createElement('div');
       div.className = 'list_item';
       var innerHTML = '<div class="tweet_text_title">What Donald Tweeted</div>';
-      innerHTML += '<div class="tweet_text">' + tweet.text + '<div>';
+      innerHTML += '<div class="tweet_text">' + linkifyStr(tweet.text) + '<div>';
       innerHTML += '<a target="_blank" class="tweet_link" href="https://twitter.com/realDonaldTrump/status/' + twitterIdAsString + '">Link</a>'
       innerHTML += '<div class="wp_text_title">How The Post Corrected It</div>';
       innerHTML += '<div class="wp_text_subtitle">' + getCorrectionSubtitle(wpResponse[1]) + '</div>';
