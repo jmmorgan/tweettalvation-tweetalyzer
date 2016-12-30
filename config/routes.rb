@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   match '/expand_reviews', to: 'welcome#expand_reviews', via: ['get', 'post']
   match '/expand_timeline_graph', to: 'welcome#expand_timeline_graph', via: ['get', 'post']
   match '/timeline_graph_data', to: 'welcome#timeline_graph_data', via: ['get', 'post']
+
+  match '/tweets', to: 'tweet#index', via: 'get'
 end

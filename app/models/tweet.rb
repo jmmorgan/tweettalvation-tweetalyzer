@@ -69,4 +69,12 @@ class Tweet < ApplicationRecord
 
     result
   end
+
+  def self.with_twitter_id_as_string(twitter_ids)
+    result = []
+    query = "SELECT t.*, concat('', t.twitter_id) AS twitter_id_as_string 
+            FROM tweets AS t
+            WHERE twitter_id IN (?)"
+    self.find_by_sql([query, twitter_ids])
+  end        
 end

@@ -1,0 +1,80 @@
+<html>
+<head>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/wpcorrections.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]>
+      <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <![endif]-->
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script>
+    // Globals
+    statusIds = [];
+    wpData = {};
+    tweets = {};
+
+    $(document).ready(function(){
+
+      $.ajax({
+        url: "https://www.pbump.net/files/post/extension/core/data.php",
+        method: "GET",
+        dataType: 'json'
+      }).done(function(data){
+        processWPData(data); 
+        loadTweets(statusIds); 
+      });
+    });
+
+    function processWPData(data){
+      $.each(data, function(k,v){
+        if(typeof v[0] === 'string'){
+          statusIds.push(v[0]);
+          wpData['' + v[0]] = v;
+        } else {
+          statusIds.concat(v[0]);
+          $.each(v[0], function(k1,v1){
+            wpData['' + v1] = v;
+          });
+        }
+      });
+    }
+
+    function loadTweets(statusIds){
+      var sliceLength = 10;
+      for (var i = 0; i < statusIds.length; i+=sliceLength){
+        var slice = statusIds.slice(i, i+sliceLength);
+        $.ajax({
+          url: "tweets?id=" + slice.join(','),
+          method: "GET",
+        }).done(function(data){
+          $.each(data, function(k,v){
+            tweets[v.twitter_id_as_string] = v;
+            appendHTML(v.twitter_id_as_string);
+          }) 
+        });
+      }
+    }
+
+    function appendHTML(twitterIdAsString){
+      var tweet = tweets[twitterIdAsString];
+      var wpResponse = wpData[twitterIdAsString];
+      var div = document.createElement('div');
+      div.className = 'list_item';
+      div.innerHTML = '<div class="tweet_text_title">What Donald Tweeted</div>';
+      div.innerHTML += '<div class="tweet_text">' + tweet.text;
+      div.innerHTML += '<div class="wp_text_title">How The Post Corrected It</div>';
+      div.innerHTML += '</div><div class="wp_text">' + wpResponse[2] + '</div>';
+      document.getElementById('list').appendChild(div);
+    }
+
+  </script>
+</head>
+<body>
+  <div class = 'title'>The Washington Post Corrects Donald Trump's Tweets</div>
+  <div id='list'>
+  </div>
+</body>
+</html>
