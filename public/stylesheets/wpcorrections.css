@@ -26,11 +26,29 @@ body {
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
 }
 
+a.tweet_link {
+  display: block;
+  text-decoration: none;
+  color: #889966;
+  padding-top: 5px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
 .wp_text_title {
   margin-top: 20px;
   display: block;
   text-align: left;
   font-size: 16px;
+  font-weight: bold;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+.wp_text_subtitle {
+  margin-top: 10px;
+  color: #cc0000;
+  display: block;
+  text-align: left;
+  font-size: 12px;
   font-weight: bold;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
 }
@@ -41,6 +59,11 @@ body {
   font-size: 12px;
   font-weight: normal;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+a.learn_more_link {
+  text-decoration: none;
+  color: #889966;
 }
 
 #list {

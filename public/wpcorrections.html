@@ -63,11 +63,38 @@
       var wpResponse = wpData[twitterIdAsString];
       var div = document.createElement('div');
       div.className = 'list_item';
-      div.innerHTML = '<div class="tweet_text_title">What Donald Tweeted</div>';
-      div.innerHTML += '<div class="tweet_text">' + tweet.text;
-      div.innerHTML += '<div class="wp_text_title">How The Post Corrected It</div>';
-      div.innerHTML += '</div><div class="wp_text">' + wpResponse[2] + '</div>';
+      var innerHTML = '<div class="tweet_text_title">What Donald Tweeted</div>';
+      innerHTML += '<div class="tweet_text">' + tweet.text + '<div>';
+      innerHTML += '<a target="_blank" class="tweet_link" href="https://twitter.com/realDonaldTrump/status/' + twitterIdAsString + '">Link</a>'
+      innerHTML += '<div class="wp_text_title">How The Post Corrected It</div>';
+      innerHTML += '<div class="wp_text_subtitle">' + getCorrectionSubtitle(wpResponse[1]) + '</div>';
+      innerHTML += '</div><div class="wp_text">' + wpResponse[2] + buildWPLink(wpResponse[3]) + '</div>';
+
+      div.innerHTML = innerHTML;
       document.getElementById('list').appendChild(div);
+    }
+
+    function getCorrectionSubtitle(code){
+      var result = 'Just so you know'
+      switch(code){
+        case 1:
+          result = 'This is incorrect or false.';
+          break;
+        case 2:
+          result = "There's important context missing";
+          break;
+        case 3:
+          result = "Just so you know";
+          break;
+      }
+
+      return result;
+    }
+
+    function buildWPLink(link){
+      var result = '<a target="_blank" class="learn_more_link" href="' + link + '">[LEARN MORE]</a>';
+
+      return result;
     }
 
   </script>

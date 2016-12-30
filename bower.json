@@ -1,0 +1,18 @@
+{
+  "name": "tweetalyzer",
+  "homepage": "https://github.com/jmmorgan/tweettalvation-tweetalyzer",
+  "authors": [
+    "Your Name <joseph_m_morgan@yahoo.com>"
+  ],
+  "description": "A bunch of demo widgets and such",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ]
+}
