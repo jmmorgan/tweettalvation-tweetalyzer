@@ -70,11 +70,18 @@ class Tweet < ApplicationRecord
     result
   end
 
-  def self.with_twitter_id_as_string(twitter_ids)
+  def self.with_twitter_id_as_string(twitter_ids, retrieve_missing_tweets = true)
     result = []
     query = "SELECT t.*, concat('', t.twitter_id) AS twitter_id_as_string 
             FROM tweets AS t
             WHERE twitter_id IN (?)"
-    self.find_by_sql([query, twitter_ids])
+    result = self.find_by_sql([query, twitter_ids]).to_a
+    if (retrieve_missing_tweets && result.size < twitter_ids.size)
+      missing_twitter_ids = twitter_ids - result.map(&:twitter_id)
+      TwitterApi.save_tweets(missing_twitter_ids)
+      result = with_twitter_id_as_string(twitter_ids, false)
+    end
+
+    result
   end        
 end

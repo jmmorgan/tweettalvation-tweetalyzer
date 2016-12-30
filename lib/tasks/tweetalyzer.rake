@@ -1,6 +1,7 @@
 namespace :tweetalyzer do
 
   task :init_vars => [:environment] do |t, args|
+    # DRY this up as we port over to TwitterAPI
     @sentiment_map = {
       Sentiment::NEGATIVE => -1,
       Sentiment::NEUTRAL => 0,
@@ -13,7 +14,7 @@ namespace :tweetalyzer do
     twitter_user_id = twitter_user_id.to_i # Ensure int format
     last_tweet_id = Tweet.where("twitter_user_id = #{twitter_user_id}").maximum(:twitter_id) || 0
 
-    @client = twitter_rest_client
+    @client = TwitterApi.rest_client
     if (!twitter_user = TwitterUser.find_by(twitter_user_id: twitter_user_id))
       user = @client.user(twitter_user_id)
       twitter_user = TwitterUser.create(twitter_user_id: twitter_user_id, name: user.name, screen_name: user.screen_name,
@@ -31,7 +32,7 @@ namespace :tweetalyzer do
     twitter_user_id = twitter_user_id.to_i # Ensure int format
     last_tweet_id = Tweet.maximum(:twitter_id) || 0
 
-    @client = twitter_rest_client
+    @client = TwitterApi.rest_client
     twitter_user_screen_name = @client.user(twitter_user_id).screen_name
 
     # Just grab a sample of 1K for now
@@ -58,7 +59,7 @@ namespace :tweetalyzer do
     tweets.each_slice(100) do |slice|
       ids = slice.map(&:twitter_id)
 
-      @client = twitter_rest_client
+      @client = TwitterApi.rest_client
       statuses = @client.statuses(ids)
       statuses.each do |status|
         tweet = Tweet.find_by(twitter_id: status.id)
@@ -79,7 +80,7 @@ namespace :tweetalyzer do
     twitter_user_ids = TwitterUser.where(screen_name: nil).map(&:twitter_user_id).uniq
     
     twitter_user_ids.each_slice(100) do |ids|
-      @client = twitter_rest_client
+      @client = TwitterApi.rest_client
       users = @client.users(ids)
       users.each do |user|
         twitter_user = TwitterUser.find_or_create_by(twitter_user_id: user.id)
@@ -108,14 +109,5 @@ namespace :tweetalyzer do
       end
     end
 
-  end
-
-  def twitter_rest_client  
-    Twitter::REST::Client.new do |config|
-        config.consumer_key        = ENV['TWEETALYZER_TWITTER_CONSUMER_KEY']
-        config.consumer_secret     = ENV['TWEETALYZER_TWITTER_CONSUMER_SECRET']
-        config.access_token        = ENV['TWEETALYZER_TWITTER_ACCESS_TOKEN']  
-        config.access_token_secret = ENV['TWEETALYZER_TWITTER_ACCESS_SECRET']
-    end
   end
 end
