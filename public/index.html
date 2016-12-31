@@ -1,0 +1,49 @@
+<html>
+<head>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/index.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]>
+      <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <![endif]-->
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    
+    $(document).ready(function(){
+      $('#a_welcome').on('click', function(){
+        $('.canvas').attr('src', '/welcome');
+      });
+
+      $('#a_howfucked').on('click', function(){
+        $('.canvas').attr('src', '/howfucked.html');
+      });
+
+      $('#a_peckingorder').on('click', function(){
+        $('.canvas').attr('src', '/peckingorder.html');
+      });
+
+      $('#a_wpcorrections').on('click', function(){
+        $('.canvas').attr('src', '/wpcorrections.html');
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class='header'>
+   <a id="a_welcome" href='#'>Trump's Tweet Reviews</a> <a href='#' id="a_howfucked">How Fucked Are We?</a>
+   <a href='#' id="a_peckingorder">Trump's Pecking Order</a>
+   <a href='#' id="a_wpcorrections">The Washington Post Corrects Trump's Tweets</a>
+  </div>
+  <iframe class='canvas' src="/welcome">
+  </iframe>
+  <div class='footer'>
+    <a id="a_welcome" href='#'>Trump's Tweet Reviews</a> <a href='#' id="a_howfucked">How Fucked Are We?</a>
+    <a href='#' id="a_peckingorder">Trump's Pecking Order</a>
+    <a href='#' id="a_wpcorrections">The Washington Post Corrects Trump's Tweets</a>
+  </div>
+</body>
+</html>
