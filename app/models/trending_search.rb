@@ -1,0 +1,2 @@
+class TrendingSearch < ApplicationRecord
+end
