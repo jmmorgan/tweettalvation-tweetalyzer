@@ -1,5 +1,7 @@
 namespace :tweetalyzer do
 
+  TRENDING_SEARCH_URL = "https://www.google.com/trends/fetchComponent?hl=en-US&q=Donald%20Trump&date=now%201-H&geo=US&cid=RISING_QUERIES_0_0"
+
   task :init_vars => [:environment] do |t, args|
     # DRY this up as we port over to TwitterAPI
     @sentiment_map = {
@@ -50,6 +52,14 @@ namespace :tweetalyzer do
             profile_image_url: user.profile_image_url_https)
         end
       end
+    end
+  end
+
+  task :collect_recent_trending_searches => [:environment] do |t, args|
+    doc = Nokogiri::HTML(open(TRENDING_SEARCH_URL))
+    search_terms = doc.xpath("//*[contains(@class, 'trends-bar-chart-name')]").map(&:text).map(&:strip).uniq
+    search_terms.each do |search_term|
+      TrendingSearch.create(terms: search_term)
     end
   end
 
