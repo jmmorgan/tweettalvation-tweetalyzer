@@ -3,11 +3,19 @@ body {
 }
 
 .header {
-  height: 100px;
+  display: inline;
+  float: left;
+  padding-left: 65px;
+  padding-bottom: 20px;
+  padding-right: 65px;
 }
 
 .footer {
-  height: 200px;
+  display: inline;
+  float: left;
+  padding-left: 65px;
+  padding-bottom: 20px;
+  padding-right: 65px;
 }
 
 .canvas {
@@ -18,7 +26,8 @@ body {
 .a_welcome {
   display: inline-block;
 
-  margin: 40px 50px 50px 65px;
+  padding-top: 20px;
+  padding-right: 50px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
@@ -27,7 +36,8 @@ body {
 .a_howfucked {
   display: inline-block;
 
-  margin: 40px 50px 50px 10px;
+  padding-top: 20px;
+  padding-right: 50px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
@@ -36,7 +46,8 @@ body {
 .a_peckingorder {
   display: inline-block;
 
-  margin: 40px 50px 50px 10px;
+  padding-top: 20px;
+  padding-right: 50px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
@@ -45,7 +56,8 @@ body {
 .a_wpcorrections {
   display: inline-block;
 
-  margin: 40px 50px 50px 10px;
+  padding-top: 20px;
+  padding-right: 50px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
@@ -54,7 +66,8 @@ body {
 .a_trendingsearches {
   display: inline-block;
 
-  margin: 40px 50px 50px 10px;
+  padding-top: 20px;
+  padding-right: 50px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
