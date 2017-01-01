@@ -18,7 +18,7 @@ body {
 .a_welcome {
   display: inline-block;
 
-  margin: 40px 100px 50px 100px;
+  margin: 40px 50px 50px 65px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
@@ -27,7 +27,7 @@ body {
 .a_howfucked {
   display: inline-block;
 
-  margin: 40px 100px 50px 10px;
+  margin: 40px 50px 50px 10px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
@@ -36,7 +36,7 @@ body {
 .a_peckingorder {
   display: inline-block;
 
-  margin: 40px 100px 50px 10px;
+  margin: 40px 50px 50px 10px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
@@ -45,7 +45,16 @@ body {
 .a_wpcorrections {
   display: inline-block;
 
-  margin: 40px 100px 50px 10px;
+  margin: 40px 50px 50px 10px;
+  text-decoration: none;
+  color: white;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+.a_trendingsearches {
+  display: inline-block;
+
+  margin: 40px 50px 50px 10px;
   text-decoration: none;
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;

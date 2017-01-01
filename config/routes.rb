@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   match '/timeline_graph_data', to: 'welcome#timeline_graph_data', via: ['get', 'post']
 
   match '/tweets', to: 'tweet#index', via: 'get'
+
+  match '/trending_searches/recent', to: 'trending_search#recent', via: 'get'
 end

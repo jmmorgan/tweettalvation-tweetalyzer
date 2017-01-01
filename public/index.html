@@ -28,6 +28,10 @@
         $('.canvas').attr('src', '/wpcorrections.html');
       });
 
+      $('.a_trendingsearches').on('click', function(){
+        $('.canvas').attr('src', '/trendingsearches.html');
+      });
+
       // Hack to bust out of iframe when a cross-domain link is clicked
       // Way too complicated. I should just serve all of these public pages through a controller. Soon.
       $('#canvas').on('load', function(e){
@@ -44,6 +48,7 @@
     <a class="a_welcome" href='#'>Trump's Tweet Reviews</a> <a href='#' class="a_howfucked">How Fucked Are We?</a>
     <a href='#' class="a_peckingorder">Trump's Pecking Order</a>
     <a href='#' class="a_wpcorrections">The Washington Post Corrects Trump's Tweets</a>
+    <a href='#' class="a_trendingsearches">Trump Google Trends</a>
   </div>
   <iframe class='canvas' id='canvas' src="/welcome">
   </iframe>
@@ -51,6 +56,7 @@
     <a class="a_welcome" href='#'>Trump's Tweet Reviews</a> <a href='#' class="a_howfucked">How Fucked Are We?</a>
     <a href='#' class="a_peckingorder">Trump's Pecking Order</a>
     <a href='#' class="a_wpcorrections">The Washington Post Corrects Trump's Tweets</a>
+    <a href='#' class="a_trendingsearches">Trump Google Trends</a>
   </div>
 </body>
 </html>

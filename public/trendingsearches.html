@@ -1,0 +1,76 @@
+<html>
+<head>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/trendingsearches.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]>
+      <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <![endif]-->
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+
+  <script>
+  $(document).ready(function(){
+    $.ajax({
+      url: '/trending_searches/recent',
+      method: 'GET',
+      dataType: 'json'
+    }).done(function(data){
+      if(data.length === 0){
+        $('.subtitle').text('Not enough recent searches to determine any trends');
+      } else {
+        $.each(data, function(k, v){
+          appendSearchTerms(v.terms);
+        });
+        $('.subtitle').text('Top trending searches as of ' + formatDateTime(new Date(data[0].created_at)));
+      }
+    });
+  });
+
+  function appendSearchTerms(terms)
+  {
+    div = document.createElement('div');
+    div.className = 'search-terms-container'
+    a = document.createElement('a');
+    a.target = '_blank';
+    a.href = 'https://www.google.com/search?q=' + encodeURIComponent(terms);
+    a.text = terms;
+    div.append(a);
+
+    $('.list-container').append(div);
+  }
+
+  function formatDateTime(date){
+    result = date.getFullYear() + '-' + padDigits((date.getMonth() + 1), 2) + '-' + padDigits(date.getDate(), 2);
+    result += ' ' + padDigits(date.getHours(), 2) + ':' + padDigits(date.getMinutes(), 2);
+
+    return result;
+  }
+
+  function padDigits(value, size){
+    result = value + '';
+    while(result.length < size){
+      result = '0'.concat(result);
+    }
+
+    return result;
+  }
+</script>
+</head>
+
+<body>
+  <div class='title'>What Are People Googling About Trump Right Now?</div>
+  <div class='subtitle'>Searching...</div>
+  <div class='main'>
+    <div class='list-container'></div>
+  </div>
+  <div class='photo-credit-container'>
+    <a href="https://twitter.com/KellyannePolls/status/803397508349198337/photo/1?ref_src=twsrc%5Etfw">Photo via Kellyanne Conway/Twitter</a>
+  </div>
+</body>
+</html>
+
+
+
