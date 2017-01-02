@@ -36,6 +36,7 @@
         dataType: 'json'
       }).done(function(data){
         processWPData(data); 
+        appendListItems();
         loadTweets(statusIds); 
       });
     });
@@ -51,6 +52,20 @@
             wpData['' + v1] = v;
           });
         }
+      });
+    }
+
+    function appendListItems(){
+      statusIds.sort(function(a, b){
+        return parseInt(b) - parseInt(a);
+      });
+
+      $.each(statusIds, function(k, statusId){
+        var div = document.createElement('div');
+        div.className = 'list_item';
+        div.id = 'list_item_' + statusId;
+        div.innerText = 'Loading...';
+        document.getElementById('list').appendChild(div);
       });
     }
 
@@ -73,17 +88,18 @@
     function appendHTML(twitterIdAsString){
       var tweet = tweets[twitterIdAsString];
       var wpResponse = wpData[twitterIdAsString];
-      var div = document.createElement('div');
-      div.className = 'list_item';
-      var innerHTML = '<div class="tweet_text_title">What Donald Tweeted</div>';
-      innerHTML += '<div class="tweet_text">' + linkifyStr(tweet.text) + '<div>';
-      innerHTML += '<a target="_blank" class="tweet_link" href="https://twitter.com/realDonaldTrump/status/' + twitterIdAsString + '">Link</a>'
-      innerHTML += '<div class="wp_text_title">How The Post Corrected It</div>';
-      innerHTML += '<div class="wp_text_subtitle">' + getCorrectionSubtitle(wpResponse[1]) + '</div>';
-      innerHTML += '</div><div class="wp_text">' + wpResponse[2] + buildWPLink(wpResponse[3]) + '</div>';
+      var div = document.getElementById('list_item_' + twitterIdAsString);
+      if(div !== null){
+        div.className = 'list_item';
+        var innerHTML = '<div class="tweet_text_title">What Donald Tweeted</div>';
+        innerHTML += '<div class="tweet_text">' + linkifyStr(tweet.text) + '<div>';
+        innerHTML += '<a target="_blank" class="tweet_link" href="https://twitter.com/realDonaldTrump/status/' + twitterIdAsString + '">Link</a>'
+        innerHTML += '<div class="wp_text_title">How The Post Corrected It</div>';
+        innerHTML += '<div class="wp_text_subtitle">' + getCorrectionSubtitle(wpResponse[1]) + '</div>';
+        innerHTML += '</div><div class="wp_text">' + wpResponse[2] + buildWPLink(wpResponse[3]) + '</div>';
 
-      div.innerHTML = innerHTML;
-      document.getElementById('list').appendChild(div);
+        div.innerHTML = innerHTML;
+      }
     }
 
     function getCorrectionSubtitle(code){
