@@ -6,6 +6,15 @@
   <!--[if IE]>
       <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <![endif]-->
+  <script>
+    // Check if in IFRAME
+    if(window.location !== window.parent.location){
+      // OK
+    } else {
+      // Redirect to index
+      window.location.href = '/?frame_src=' + encodeURIComponent(window.location.pathname);
+    }
+  </script>
   <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="

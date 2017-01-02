@@ -11,7 +11,22 @@
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
   <script type="text/javascript">
+    // This block borrowed from https://www.sitepoint.com/url-parameters-jquery/
+    $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      return results[1] || 0;
+    }
+    var frame_src = '/welcome';
+    
+    try{
+      frame_src = decodeURIComponent($.urlParam('frame_src'));
+    } catch (e){
+      // Ignore
+    }
+
     $(document).ready(function(){
+      $('.canvas').attr('src', frame_src);
+
       $('.a_welcome').on('click', function(){
         $('.canvas').attr('src', '/welcome');
       });
@@ -38,7 +53,6 @@
         $(this).contents().find('a').attr('target', '_top');
       });
     });
-
 
   </script>
 </head>
