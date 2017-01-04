@@ -120,4 +120,61 @@ namespace :tweetalyzer do
     end
 
   end
+
+  task :hunt_for_likely_trolls => :init_vars do |t, args|  
+    @client = TwitterApi.rest_client
+    
+    limit = 100
+    offset = 0
+    query = "SELECT DISTINCT tu.twitter_user_id, tu.profile_image_url, t.sentiment,
+              tc.id
+              FROM twitter_users tu
+              JOIN tweets t ON (tu.twitter_user_id = t.twitter_user_id)
+              LEFT JOIN troll_candidates tc ON (tu.twitter_user_id = tc.twitter_user_id)
+              WHERE t.sentiment = 1
+              AND tc.id IS NULL
+              ORDER BY tu.twitter_user_id DESC
+              LIMIT ? OFFSET ?"
+    more_results = true
+    while(more_results)
+      user_ids = []
+      puts "Retrieving users from offset #{offset}..."
+      results = TwitterUser.find_by_sql([query, limit, offset])
+      more_results = !results.empty?
+      results.each do |twitter_user|
+        user_ids << twitter_user['twitter_user_id']
+      end
+      sleep 2 # put this here so we don't exceed API limit 
+      process_users_for_likely_trolls(@client.users(user_ids))
+
+      offset += limit
+    end    
+  end
+
+  def process_users_for_likely_trolls(twitter_users)
+    twitter_users.each do |twitter_user|
+      add_or_update_candidate = false
+      # Add or update candiate if one of the following conditions is true
+      if (twitter_user.profile_image_url.to_s =~ /default_profile_images/ )
+        add_or_update_candidate = true
+      elsif (twitter_user.description.to_s.blank? || twitter_user.location.to_s.blank?)
+        add_or_update_candidate = true
+      elsif (twitter_user.followers_count < 20)
+        add_or_update_candidate = true
+      end
+
+      if(add_or_update_candidate)
+        troll_candidate = TrollCandidate.find_or_create_by(twitter_user_id: twitter_user.id)
+        troll_candidate.profile_created_at = twitter_user.created_at
+        troll_candidate.followers_count = twitter_user.followers_count
+        troll_candidate.friends_count = twitter_user.friends_count
+        troll_candidate.statuses_count = twitter_user.statuses_count
+        troll_candidate.geo_enabled = twitter_user.geo_enabled?
+        troll_candidate.has_description = !twitter_user.description.to_s.blank?
+        troll_candidate.has_location = !twitter_user.location.to_s.blank?
+        troll_candidate.has_default_profile_img = (twitter_user.profile_image_url.to_s =~ /default_profile_images/ )
+        troll_candidate.save
+      end
+    end
+  end
 end
