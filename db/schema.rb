@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20170104020519) do
     t.boolean  "has_location"
     t.boolean  "geo_enabled"
     t.integer  "statuses_count"
-    t.integer  "trump_related_sttauses_count"
+    t.integer  "trump_related_statuses_count"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.index ["profile_created_at"], name: "index_troll_candidates_on_profile_created_at", using: :btree

@@ -9,7 +9,7 @@ class CreateTrollCandidates < ActiveRecord::Migration[5.0]
       t.boolean :has_location
       t.boolean :geo_enabled
       t.integer :statuses_count
-      t.integer :trump_related_sttauses_count
+      t.integer :trump_related_statuses_count
 
       t.timestamps
     end
