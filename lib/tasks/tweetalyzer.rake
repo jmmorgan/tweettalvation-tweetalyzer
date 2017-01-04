@@ -122,7 +122,6 @@ namespace :tweetalyzer do
   end
 
   task :hunt_for_likely_trolls => :init_vars do |t, args|  
-    @client = TwitterApi.rest_client
     
     limit = 100
     offset = 0
@@ -145,7 +144,8 @@ namespace :tweetalyzer do
         user_ids << twitter_user['twitter_user_id']
       end
       sleep 2 # put this here so we don't exceed API limit 
-      process_users_for_likely_trolls(@client.users(user_ids))
+      client = TwitterApi.rest_client
+      process_users_for_likely_trolls(client.users(user_ids))
 
       offset += limit
     end    
