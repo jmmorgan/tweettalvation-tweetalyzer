@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104045550) do
+ActiveRecord::Schema.define(version: 20170104061238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,9 @@ ActiveRecord::Schema.define(version: 20170104045550) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.bigint   "twitter_user_id"
+    t.datetime "synched_with_twitter_at"
     t.index ["profile_created_at"], name: "index_troll_candidates_on_profile_created_at", using: :btree
+    t.index ["synched_with_twitter_at"], name: "index_troll_candidates_on_synched_with_twitter_at", using: :btree
     t.index ["twitter_user_id"], name: "index_troll_candidates_on_twitter_user_id", using: :btree
   end
 
