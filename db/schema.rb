@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20170104045550) do
     t.integer  "trump_related_statuses_count"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.integer  "twitter_user_id"
+    t.bigint   "twitter_user_id"
     t.index ["profile_created_at"], name: "index_troll_candidates_on_profile_created_at", using: :btree
     t.index ["twitter_user_id"], name: "index_troll_candidates_on_twitter_user_id", using: :btree
   end
