@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170101043258) do
+ActiveRecord::Schema.define(version: 20170104020519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,21 @@ ActiveRecord::Schema.define(version: 20170101043258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_trending_searches_on_created_at", using: :btree
+  end
+
+  create_table "troll_candidates", force: :cascade do |t|
+    t.datetime "profile_created_at"
+    t.integer  "followers_count"
+    t.integer  "friends_count"
+    t.boolean  "has_default_profile_img"
+    t.boolean  "has_description"
+    t.boolean  "has_location"
+    t.boolean  "geo_enabled"
+    t.integer  "statuses_count"
+    t.integer  "trump_related_sttauses_count"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["profile_created_at"], name: "index_troll_candidates_on_profile_created_at", using: :btree
   end
 
   create_table "tweets", force: :cascade do |t|
