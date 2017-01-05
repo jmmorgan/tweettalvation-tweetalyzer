@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   match '/tweets', to: 'tweet#index', via: 'get'
 
   match '/trending_searches/recent', to: 'trending_search#recent', via: 'get'
+  
+ match '/troll_candidates', to: 'troll_candidate#index', via: 'get'
 end
