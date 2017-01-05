@@ -165,15 +165,58 @@ namespace :tweetalyzer do
 
       if(add_or_update_candidate)
         troll_candidate = TrollCandidate.find_or_create_by(twitter_user_id: twitter_user.id)
-        troll_candidate.profile_created_at = twitter_user.created_at
-        troll_candidate.followers_count = twitter_user.followers_count
-        troll_candidate.friends_count = twitter_user.friends_count
-        troll_candidate.statuses_count = twitter_user.statuses_count
-        troll_candidate.geo_enabled = twitter_user.geo_enabled?
-        troll_candidate.has_description = !twitter_user.description.to_s.blank?
-        troll_candidate.has_location = !twitter_user.location.to_s.blank?
-        troll_candidate.has_default_profile_img = (twitter_user.profile_image_url.to_s =~ /default_profile_images/ )
-        troll_candidate.save
+        update_troll_candidate(troll_candidate, twitter_user)
+      end
+    end
+  end
+
+  def update_troll_candidate(troll_candidate, twitter_user, synch_with_twitter = false)
+    troll_candidate.profile_created_at = twitter_user.created_at
+    troll_candidate.followers_count = twitter_user.followers_count
+    troll_candidate.friends_count = twitter_user.friends_count
+    troll_candidate.statuses_count = twitter_user.statuses_count
+    troll_candidate.geo_enabled = twitter_user.geo_enabled?
+    troll_candidate.has_description = !twitter_user.description.to_s.blank?
+    troll_candidate.has_location = !twitter_user.location.to_s.blank?
+    troll_candidate.has_default_profile_img = (twitter_user.profile_image_url.to_s =~ /default_profile_images/ )
+
+    if (synch_with_twitter)
+      client = TwitterApi.rest_client
+      # Get last 200 tweets
+      user_timeline = client.user_timeline(twitter_user.id, count: 200)
+      trump_related_statuses_count = 0
+      user_timeline.each do |tweet|
+        # really cude, of course, but good enough for now
+        if(tweet.text =~ /\btrump\b/i)
+          trump_related_statuses_count += 1
+        end 
+      end
+      puts "#{trump_related_statuses_count} - #{troll_candidate.statuses_count} #{twitter_user.screen_name}"
+      troll_candidate.trump_related_statuses_count = trump_related_statuses_count
+      troll_candidate.synched_with_twitter_at = DateTime.now.getutc
+    end
+
+    troll_candidate.save
+  end
+
+  task :sync_troll_candidates_with_twitter => :init_vars do |t, args| 
+    # Select a 'random' section of max 500 users to sync
+    # start with a relation that narrows things down A LOT
+    troll_candidates = TrollCandidate.select('random() AS rnd, troll_candidates.*')
+                .where(has_default_profile_img: true, has_description: false, has_location: false)
+                .where('followers_count < 10').where('statuses_count > 50')
+                .order('rnd')
+                .limit(500).to_a
+    troll_candidates_map = troll_candidates.inject({}) do |memo, troll_candidate|
+      memo[troll_candidate.twitter_user_id] = troll_candidate
+      memo
+    end
+    
+    client = TwitterApi.rest_client
+    troll_candidates_map.keys.each_slice(100) do |slice|
+      client.users(slice).each do |twitter_user|
+        troll_candidate = troll_candidates_map[twitter_user.id]
+        update_troll_candidate(troll_candidate, twitter_user, true)
       end
     end
   end
