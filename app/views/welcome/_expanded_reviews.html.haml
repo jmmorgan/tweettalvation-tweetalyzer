@@ -20,7 +20,7 @@
                 %span.qa-message-who
                   %span.qa-message-who-pad by
                   %span.qa-message-who-data
-                    %a{:href => "https://twitter.com/realDonaldTrump"} 
+                    %a{:href => "https://twitter.com/#{reply.screen_name}", :target => '_top'} 
                       = "@#{reply.screen_name}"
         %i{'class' => "fa fa-#{sentiment_prefix}-o", 'aria-hidden' => true}
         .qa-message-content
