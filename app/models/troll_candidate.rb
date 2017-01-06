@@ -1,7 +1,8 @@
 class TrollCandidate < ApplicationRecord
 
   def self.top(limit=10)
-    query = "SELECT tc.*, tu.*, t.*
+    query = "SELECT tc.*, tu.*, t.*, concat('', tu.twitter_user_id) AS twitter_user_id_as_string,
+              concat('', t.twitter_id) AS twitter_id_as_string
               FROM troll_candidates tc
               INNER JOIN twitter_users tu ON (tc.twitter_user_id = tu.twitter_user_id)
               LEFT JOIN tweets t ON (tc.twitter_user_id = t.twitter_user_id AND t.sentiment = 1)

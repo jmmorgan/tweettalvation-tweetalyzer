@@ -1,0 +1,145 @@
+body {
+  background-color: #ccc;
+}
+
+.title {
+  margin-top: 30px;
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+#candidate-list {
+  display: block;
+  background-color: white;
+  margin: 30px calc(50% - 300px);
+  padding: 0px 10px;
+}
+
+.candidate-item {
+  padding-bottom: 15px;
+}
+
+.candidate-spacer {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: lightgrey;
+}
+
+.candidate-avatar {
+  float: left;
+  padding: 10px 0;
+}
+
+.candidate-name {
+  float: left;
+  padding: 10px 5px;
+  font-size: 12px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-weight: bold;
+}
+
+.candidate-name > a {
+  text-decoration: none;
+  color: lightgrey;
+  padding: 0 5px;
+}
+
+.candidate-joined {
+  margin: 48px 0 0 48px;
+  padding: 0 5px;
+  font-size: 12px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+.candidate-stats-headers {
+  display: block;
+  height: 15px;
+  margin-top: 10px;
+  color: #1da1f2;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-weight: bold;
+
+}
+
+.candidate-stats-header-tweets {
+  float: left;
+  margin-right: 50px;
+  width: 50px;
+}
+
+.candidate-stats-header-friends {
+  float: left;
+  padding-right: 50px;
+  width: 70px;
+}
+
+.candidate-stats-header-followers {
+  float: left;
+  padding-right: 50px;
+  width: 74px;
+}
+
+.candidate-stats-values {
+  display: block;
+  height: 15px;
+  color: #1da1f2;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-weight: bold;
+
+}
+
+.candidate-stats-value-tweets {
+  float: left;
+  margin-right: 50px;
+  width: 50px;
+  text-align: center;
+}
+
+.candidate-stats-value-friends {
+  float: left;
+  margin-right: 50px;
+  width: 70px;
+  text-align: center;
+}
+
+.candidate-stats-value-followers {
+  float: left;
+  margin-right: 50px;
+  width: 74px;
+  text-align: center;
+}
+
+.candidate-highlighted-tweet-header {
+  display: block;
+  margin-top: 15px;
+  height: 15px;
+  color: #1da1f2;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-weight: bold;
+
+}
+
+.candidate-highlighted-tweet-text {
+  display: block;
+  margin-top: 5px;
+  margin-bottom:15px;
+  height: 15px;
+  font-size: 12px;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+.candidate-highlighted-tweet-text  > a {
+  text-decoration: none;
+  padding-left: 5px;
+  color: lightgrey;
+}
+

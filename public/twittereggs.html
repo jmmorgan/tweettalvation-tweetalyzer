@@ -1,0 +1,123 @@
+<html>
+<head>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/twittereggs.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]>
+      <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <![endif]-->
+  <script>
+    // Check if in IFRAME
+    if(window.location !== window.parent.location){
+      // OK
+    } else {
+      // Redirect to index
+      window.location.href = '/?frame_src=' + encodeURIComponent(window.location.pathname);
+    }
+  </script>
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script src="/scripts/linkifyjs/linkify.min.js"></script>
+  <script src="/scripts/linkifyjs/linkify-string.js"></script>
+  <script src="/scripts/linkifyjs/linkify-jquery.js"></script>
+  <script>
+    $(document).ready(function(){
+      loadCandidates();
+    });
+
+    function loadCandidates(){
+      $.ajax({
+        url: '/troll_candidates',
+        method: 'GET',
+        dataType: 'json'
+      }).done(function(data){
+        $('#candidate-list').html('');
+        $.each(data, function(k, v){
+          appendCandidateDiv(v);
+        });
+      });
+    }
+
+    function appendCandidateDiv(candidate){
+      var div = document.createElement('div');
+      div.className = 'candidate-item';
+      div.id = 'candidate_item_' + candidate.twitter_user_id_as_string;
+      var innerHTML = '<div class="candidate-spacer"></div>';
+      innerHTML = innerHTML.concat(buildCandidateAvatarHTML(candidate));
+      innerHTML = innerHTML.concat(buildCandidateNameHTML(candidate));
+      innerHTML = innerHTML.concat(buildCandidateJoinedHTML(candidate));
+      innerHTML = innerHTML.concat(buildCandidateStatsHTML(candidate));
+      innerHTML = innerHTML.concat(buildHighlightedTweetHTML(candidate));
+      div.innerHTML = innerHTML;
+      document.getElementById('candidate-list').appendChild(div);
+    }
+
+    function buildCandidateAvatarHTML(candidate){
+      var html = '<div class="candidate-avatar">';
+      html = html.concat('<a target="_blank" href="https://twitter.com/' + candidate.screen_name + '">');
+      html = html.concat('<img src="' + candidate.profile_image_url + '"/>');
+      html = html.concat('</a></div>');
+
+      return html;
+    }
+
+    function buildCandidateNameHTML(candidate){
+      var html = '<div class="candidate-name">';
+      html = html.concat(candidate.name);
+      html = html.concat('<a target="_blank" href="https://twitter.com/' + candidate.screen_name + '">@');
+      html = html.concat(candidate.screen_name);
+      html = html.concat('</a></div>');
+
+      return html;
+    }
+
+    function buildCandidateJoinedHTML(candidate){
+      var html = '<div class="candidate-joined">';
+      html = html.concat(formatJoinDate(candidate.profile_created_at));
+      html = html.concat('</div>');
+
+      return html;
+    }
+
+    function buildCandidateStatsHTML(candidate){
+      var html = '<div class="candidate-stats-headers">';
+      html = html.concat('<div class="candidate-stats-header-tweets">Tweets</div>');
+      html = html.concat('<div class="candidate-stats-header-friends">Following</div>');
+      html = html.concat('<div class="candidate-stats-header-followers">Followers</div>');
+      html = html.concat('</div>');
+
+      html = html.concat('<div class="candidate-stats-values">');
+      html = html.concat('<div class="candidate-stats-value-tweets">' + candidate.statuses_count + '</div>');
+      html = html.concat('<div class="candidate-stats-value-friends">' + candidate.followers_count + '</div>');
+      html = html.concat('<div class="candidate-stats-value-followers">' + candidate.friends_count + '</div>');
+      html = html.concat('</div>');
+
+      return html;
+    }
+
+    function buildHighlightedTweetHTML(candidate){
+      var html = '<div class="candidate-highlighted-tweet-header">Highlighted Tweet:</div>';
+      html = html.concat('<div class="candidate-highlighted-tweet-text">' + candidate.text);
+      var statusHref = "https://twitter.com/" + candidate.screen_name + "/status/" + candidate.twitter_id_as_string;
+      html = html.concat('<a target="_blank" href="' + statusHref + '">Link</a>')
+      html = html.concat('</div>');
+      html = html.concat('</div>');
+
+      return html;
+    }
+
+    function formatJoinDate(dateString){
+      date = new Date(dateString);
+      month = ["January", "February", "March", "April", "May", "June", "July", "August",
+                "September", "October", "November", "December"][date.getMonth()]
+      return 'Joined ' + month + ' ' + date.getFullYear();
+    }
+  </script>
+</head>
+<body>
+  <div class='title'>Vote For Your Favorite Twitter Egg</div>
+  <div id='candidate-list'>Loading...</div>
+</body>
+</html>
