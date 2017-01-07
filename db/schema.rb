@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106041608) do
+ActiveRecord::Schema.define(version: 20170106235521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(version: 20170106041608) do
     t.boolean  "has_location"
     t.boolean  "geo_enabled"
     t.integer  "statuses_count"
-    t.integer  "trump_related_statuses_count"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "recently_liked_trump_tweets_count"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.bigint   "twitter_user_id"
     t.datetime "synched_with_twitter_at"
     t.index ["profile_created_at"], name: "index_troll_candidates_on_profile_created_at", using: :btree

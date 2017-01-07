@@ -132,9 +132,9 @@ body {
   display: block;
   margin-top: 5px;
   margin-bottom:15px;
-  height: 15px;
-  font-size: 12px;
-  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .candidate-highlighted-tweet-text  > a {

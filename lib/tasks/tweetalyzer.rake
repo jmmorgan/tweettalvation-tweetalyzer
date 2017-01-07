@@ -183,16 +183,14 @@ namespace :tweetalyzer do
     if (synch_with_twitter)
       client = TwitterApi.rest_client
       # Get last 200 tweets
-      user_timeline = client.user_timeline(twitter_user.id, count: 200)
-      trump_related_statuses_count = 0
-      user_timeline.each do |tweet|
-        # really cude, of course, but good enough for now
-        if(tweet.text =~ /\btrump\b/i)
-          trump_related_statuses_count += 1
+      favorites = client.favorites(user_id: twitter_user.id, count: 200)
+      trump_authored_tweets_count = 0
+      favorites.each do |tweet|
+        if(tweet.user.screen_name == 'realDonaldTrump')
+          trump_authored_tweets_count += 1
         end 
       end
-      puts "#{trump_related_statuses_count} - #{troll_candidate.statuses_count} #{twitter_user.screen_name}"
-      troll_candidate.trump_related_statuses_count = trump_related_statuses_count
+      troll_candidate.recently_liked_trump_tweets_count = trump_authored_tweets_count
       troll_candidate.synched_with_twitter_at = DateTime.now.getutc
     end
 
@@ -202,11 +200,12 @@ namespace :tweetalyzer do
   task :sync_troll_candidates_with_twitter => :init_vars do |t, args| 
     # Select a 'random' section of max 500 users to sync
     # start with a relation that narrows things down A LOT
+    limit = 50 # Small limit for now
     troll_candidates = TrollCandidate.select('random() AS rnd, troll_candidates.*')
                 .where(has_default_profile_img: true, has_description: false, has_location: false)
                 .where('followers_count < 10').where('statuses_count > 50')
                 .order('rnd')
-                .limit(500).to_a
+                .limit(limit).to_a
     troll_candidates_map = troll_candidates.inject({}) do |memo, troll_candidate|
       memo[troll_candidate.twitter_user_id] = troll_candidate
       memo
