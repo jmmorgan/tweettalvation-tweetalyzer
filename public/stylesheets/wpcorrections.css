@@ -15,7 +15,7 @@ body {
   display: block;
   font-size: 16px;
   font-weight: bold;
-  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .tweet_text {
@@ -23,7 +23,7 @@ body {
   display: block;
   font-size: 12px;
   font-weight: normal;
-  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 a.tweet_link {
@@ -31,7 +31,7 @@ a.tweet_link {
   text-decoration: none;
   color: #889966;
   padding-top: 5px;
-  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .wp_text_title {
@@ -40,7 +40,7 @@ a.tweet_link {
   text-align: left;
   font-size: 16px;
   font-weight: bold;
-  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .wp_text_subtitle {
@@ -50,7 +50,7 @@ a.tweet_link {
   text-align: left;
   font-size: 12px;
   font-weight: bold;
-  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .wp_text {
@@ -58,7 +58,7 @@ a.tweet_link {
   display: block;
   font-size: 12px;
   font-weight: normal;
-  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 a.learn_more_link {

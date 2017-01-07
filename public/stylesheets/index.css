@@ -72,3 +72,13 @@ body {
   color: white;
   font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
 }
+
+.a_twittereggs {
+  display: inline-block;
+
+  padding-top: 20px;
+  padding-right: 50px;
+  text-decoration: none;
+  color: white;
+  font-family: "Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}

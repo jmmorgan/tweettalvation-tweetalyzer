@@ -3,6 +3,7 @@
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
   <link href="/stylesheets/twittereggs.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
   <!--[if IE]>
       <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <![endif]-->
@@ -33,9 +34,25 @@
         method: 'GET',
         dataType: 'json'
       }).done(function(data){
-        $('#candidate-list').html('');
-        $.each(data, function(k, v){
-          appendCandidateDiv(v);
+        displayCandidates(data);
+      });
+    }
+
+    function displayCandidates(data){
+      $('#candidate-list').html('');
+      $.each(data, function(k, v){
+        appendCandidateDiv(v);
+      });
+
+      $('.fa-arrow-up').on('click', function(){
+        var twitterUserId = $(this).data('twitter-user-id');
+        $.ajax({
+          url: 'troll_candidate/' + twitterUserId + '/upvote',
+          method: 'POST',
+          dataType: 'json'
+        }).done(function(data){
+          // Quick and dirty re-render of whole list
+          displayCandidates(data);
         });
       });
     }
@@ -47,6 +64,7 @@
       var innerHTML = '<div class="candidate-spacer"></div>';
       innerHTML = innerHTML.concat(buildCandidateAvatarHTML(candidate));
       innerHTML = innerHTML.concat(buildCandidateNameHTML(candidate));
+      innerHTML = innerHTML.concat(buildCandidateVotesHTML(candidate));
       innerHTML = innerHTML.concat(buildCandidateJoinedHTML(candidate));
       innerHTML = innerHTML.concat(buildCandidateStatsHTML(candidate));
       innerHTML = innerHTML.concat(buildHighlightedTweetHTML(candidate));
@@ -103,6 +121,22 @@
       var statusHref = "https://twitter.com/" + candidate.screen_name + "/status/" + candidate.twitter_id_as_string;
       html = html.concat('<a target="_blank" href="' + statusHref + '">Link</a>')
       html = html.concat('</div>');
+      html = html.concat('</div>');
+
+      return html;
+    }
+
+    function buildCandidateVotesHTML(candidate){
+      var votesCount = candidate.votes_count;
+      if(votesCount === null){
+        votesCount = 0;
+      }
+      var votesCountLabel = '' + votesCount + ((votesCount != 1) ? ' votes' : ' vote');
+      
+      var html = '<div class="candidate-votes">' + votesCountLabel;
+      if(!candidate.upvoted){
+        html = html.concat('<i data-twitter-user-id="' + candidate.twitter_user_id_as_string + '" class="fa fa-arrow-up" aria-hidden="true"></i>');
+      }
       html = html.concat('</div>');
 
       return html;

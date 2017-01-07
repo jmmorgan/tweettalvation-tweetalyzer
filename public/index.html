@@ -47,6 +47,10 @@
         $('.canvas').attr('src', '/trendingsearches.html');
       });
 
+      $('.a_twittereggs').on('click', function(){
+        $('.canvas').attr('src', '/twittereggs.html');
+      });
+
       // Hack to bust out of iframe when a cross-domain link is clicked
       // Way too complicated. I should just serve all of these public pages through a controller. Soon.
       $('#canvas').on('load', function(e){
@@ -63,6 +67,7 @@
     <a href='#' class="a_peckingorder">Trump's Pecking Order</a>
     <a href='#' class="a_wpcorrections">The Washington Post Corrects Trump's Tweets</a>
     <a href='#' class="a_trendingsearches">Trump Google Trends</a>
+    <a href='#' class="a_twittereggs">Your Favorite Twitter Egg</a>
   </div>
   <iframe class='canvas' id='canvas' src="/welcome">
   </iframe>
@@ -71,6 +76,7 @@
     <a href='#' class="a_peckingorder">Trump's Pecking Order</a>
     <a href='#' class="a_wpcorrections">The Washington Post Corrects Trump's Tweets</a>
     <a href='#' class="a_trendingsearches">Trump Google Trends</a>
+    <a href='#' class="a_twittereggs">Your Favorite Twitter Egg</a>
   </div>
 </body>
 </html>
