@@ -27,28 +27,48 @@
     $(document).ready(function(){
       $('.canvas').attr('src', frame_src);
 
+      var stateObj = {foo: 'bar'}
+
       $('.a_welcome').on('click', function(){
-        $('.canvas').attr('src', '/welcome');
+        var path = '/welcome';
+        $('.canvas').attr('src', path);
+        // Ensure browser URL is correct
+        history.replaceState(stateObj, '', path);
       });
 
       $('.a_howfucked').on('click', function(){
-        $('.canvas').attr('src', '/howfucked.html');
+        var path = '/howfucked.html';
+        $('.canvas').attr('src', path);
+        // Ensure browser URL is correct
+        history.replaceState(stateObj, '', path);
       });
 
       $('.a_peckingorder').on('click', function(){
-        $('.canvas').attr('src', '/peckingorder.html');
+        var path = '/peckingorder.html';
+        $('.canvas').attr('src', path);
+        // Ensure browser URL is correct
+        history.replaceState(stateObj, '', path);
       });
 
       $('.a_wpcorrections').on('click', function(){
-        $('.canvas').attr('src', '/wpcorrections.html');
+        var path = '/wpcorrections.html';
+        $('.canvas').attr('src', path);
+        // Ensure browser URL is correct
+        history.replaceState(stateObj, '', path);
       });
 
       $('.a_trendingsearches').on('click', function(){
-        $('.canvas').attr('src', '/trendingsearches.html');
+        var path = '/trendingsearches.html';
+        $('.canvas').attr('src', path);
+        // Ensure browser URL is correct
+        history.replaceState(stateObj, '', path);
       });
 
       $('.a_twittereggs').on('click', function(){
-        $('.canvas').attr('src', '/twittereggs.html');
+        var path = '/twittereggs.html';
+        $('.canvas').attr('src', path);
+        // Ensure browser URL is correct
+        history.replaceState(stateObj, '', path);
       });
 
       // Hack to bust out of iframe when a cross-domain link is clicked

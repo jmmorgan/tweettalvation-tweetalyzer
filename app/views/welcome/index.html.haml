@@ -44,6 +44,14 @@
     
 :javascript
 
+  // Check if in IFRAME
+  if(window.location !== window.parent.location){
+    // OK
+  } else {
+    // Redirect to index
+    window.location.href = '/?frame_src=' + encodeURIComponent(window.location.pathname);
+  }
+
   $(document).ready(function(){
     doDocumentReady();
   });
