@@ -10,13 +10,6 @@
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     
-    // Added this code because d3 library is not loading properly in production on Heroku for some reason
-    if (typeof d3 === 'undefined'){
-      var script = document.createElement('script');
-      script.src = "https://d3js.org/d3.v4.min.js";
-      document.getElementsByTagName('head')[0].appendChild(script);
-    }
-    
     d3.csv("./timeline_graph_data?t=" + Math.floor(Date.now() / 1000) + "&twitter_id=#{@twitter_id}", function(error, data) {
       if (error) throw error;
       

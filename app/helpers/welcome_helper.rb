@@ -44,6 +44,11 @@ module WelcomeHelper
       next_hour += 3600
     end
 
+    # Ensure that we have at least six hours
+    while(sorted_times.length < 6)
+      sorted_times << (sorted_times.max + 3600)
+    end
+
     sorted_times.sort
   end
 end
