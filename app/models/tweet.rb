@@ -54,7 +54,7 @@ class Tweet < ApplicationRecord
   def self.replies_timeline(twitter_id)
     result = []
     query = "SELECT COUNT(*) AS cnt, in_reply_to_status_id, sentiment, 
-            to_char(tweet_created_at, 'YYYY-Mon-DD HH:00') AS tweet_time 
+            to_char(tweet_created_at, 'YYYY-Mon-DD HH24:00') AS tweet_time 
             FROM tweets
             WHERE in_reply_to_status_id = ?
             GROUP BY in_reply_to_status_id, sentiment, tweet_time"
