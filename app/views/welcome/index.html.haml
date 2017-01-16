@@ -154,4 +154,9 @@
         $(this).text('Show Timeline Graph');
       }
     });
+
+    $('.qa-message-content').each(function(i,obj){
+      var text = $(this).text();
+      $(this).html(linkifyStr(text));
+    });
   }

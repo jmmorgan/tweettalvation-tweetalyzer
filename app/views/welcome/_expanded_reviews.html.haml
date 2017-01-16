@@ -28,3 +28,14 @@
 
 .reviews-footer
   = render partial: 'review_paginator', locals: {location: "footer-#{@twitter_id}"}
+
+
+:javascript
+
+
+  $(document).ready(function(){
+    $('.qa-message-content').each(function(i,obj){
+      var text = $(this).text();
+      $(this).html(linkifyStr(text));
+    });
+  });
